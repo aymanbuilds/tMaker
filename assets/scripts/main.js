@@ -28,6 +28,11 @@ function saveToLocalStorageFunctions() {
     localStorage.setItem('functions', functions);
 }
 
+function saveToLocalStorageStyles() {
+    const functions = document.getElementById('stylesInput').value;
+    localStorage.setItem('styles', functions);
+}
+
 function loadFromLocalStorage() {
     const savedCode = localStorage.getItem('code');
     if (savedCode !== null) {
@@ -39,11 +44,16 @@ function loadFromLocalStorage() {
     if (functionsCode !== null) {
         document.getElementById('functionsInput').value = functionsCode;
     }
+
+    const styles = localStorage.getItem('styles');
+    if (functionsCode !== null) {
+        document.getElementById('stylesInput').value = styles;
+    }
 }
 
 document.getElementById('in').addEventListener('input', saveToLocalStorageCode);
-
 document.getElementById('functionsInput').addEventListener('input', saveToLocalStorageFunctions);
+document.getElementById('stylesInput').addEventListener('input', saveToLocalStorageStyles);
 
 document.addEventListener('DOMContentLoaded', function () {
     loadFromLocalStorage();
@@ -61,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
             textareas.forEach(ta => {
                 if (ta.id === targetId) {
                     ta.classList.add('active');
-                    document.getElementById(targetId).focus();
+                    document.getElementById(targetId).querySelector('textarea').focus();
                 } else {
                     ta.classList.remove('active');
                 }
@@ -94,4 +104,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     setupLineNumbers('in');
     setupLineNumbers('functionsInput');
+    setupLineNumbers('stylesInput');
 });
+
+function showLoader() {
+    document.querySelector('.popups').classList.add('visible');
+}
+
+function hideLoader() {
+    document.querySelector('.popups').classList.remove('visible');
+}

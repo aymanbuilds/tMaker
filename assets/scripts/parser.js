@@ -36,7 +36,7 @@ function isProperty(property) {
         'border-top-width', 'btwidth', 'border-right-width', 'brwidth',
         'border-bottom-width', 'bbwidth', 'border-left-width', 'blwidth',
         'border-top-style', 'btstyle', 'border-right-style', 'brstyle',
-        'border-bottom-style', 'bbstyle', 'z-index', 'zindex', 'overflow', 'overflowy','overflowx',
+        'border-bottom-style', 'bbstyle', 'z-index', 'zindex', 'overflow', 'overflowy', 'overflowx',
         'visibility', 'visibility', 'opacity', 'opacity', 'box-shadow', 'bshadow',
         'border-left-style', 'blstyle', 'border-top-color', 'btcolor',
         'border-right-color', 'brcolor', 'border-bottom-color', 'bbcolor',
@@ -60,7 +60,9 @@ function isProperty(property) {
 }
 
 // Function to parse multiple commands split by lines
-function compile() {
+function compile(preview) {
+    showLoader();
+
     let functionsArray = [];
     let functionsInputValue = document.getElementById('functionsInput').value;
     let functionBlocks = functionsInputValue.trim().split(/}\s*/);
@@ -131,6 +133,13 @@ function compile() {
         if (line !== '')
             parseSingleCommand(line, functionsArray);
     });
+
+    setTimeout(() => {
+        hideLoader();
+        if (preview) {
+            previewHTML(false);
+        }
+    }, 1000);
 }
 
 function execFunction(commands) {
@@ -185,8 +194,8 @@ function formatCssPropertyAndValue(property, value) {
         'bbstyle': 'border-bottom-style',
         'zindex': 'z-index',
         'overflow': 'overflow',
-        'overflowx':'overflow-x',
-        'overflowy':'overflow-y',
+        'overflowx': 'overflow-x',
+        'overflowy': 'overflow-y',
         'visibility': 'visibility',
         'opacity': 'opacity',
         'bshadow': 'box-shadow',
@@ -401,7 +410,7 @@ function parseSingleCommand(command, functionsArray) {
         'border-top-width', 'btwidth', 'border-right-width', 'brwidth',
         'border-bottom-width', 'bbwidth', 'border-left-width', 'blwidth',
         'border-top-style', 'btstyle', 'border-right-style', 'brstyle',
-        'border-bottom-style', 'bbstyle', 'z-index', 'zindex', 'overflow', 'overflowy','overflowx',
+        'border-bottom-style', 'bbstyle', 'z-index', 'zindex', 'overflow', 'overflowy', 'overflowx',
         'visibility', 'visibility', 'opacity', 'opacity', 'box-shadow', 'bshadow',
         'border-left-style', 'blstyle', 'border-top-color', 'btcolor',
         'border-right-color', 'brcolor', 'border-bottom-color', 'bbcolor',
@@ -697,12 +706,15 @@ function parseSingleCommand(command, functionsArray) {
                     execFunction(modifiedBodyLines);
                 } else {
                     console.error(`Function ${functionName} not found.`);
+                    outputArray.push({ 'success': false, 'message': `Function ${functionName} not found.` });
                 }
             } else {
                 console.error("No parameters found in the function call.");
+                outputArray.push({ 'success': false, 'message': "No parameters found in the function call." });
             }
         } else {
             console.error("Invalid command format.");
+            outputArray.push({ 'success': false, 'message': "Invalid command format." });
         }
     }
     else {
@@ -712,9 +724,12 @@ function parseSingleCommand(command, functionsArray) {
 }
 
 // Function to preview HTML in a new window
-function previewHTML() {
-    // Compile
-    compile();
+function previewHTML(build) {
+    if (build) {
+        // Compile
+        compile(true);
+        return;
+    }
 
     // Create a new window
     const screenWidth = screen.width;

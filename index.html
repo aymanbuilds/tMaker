@@ -24,7 +24,7 @@
             </header>
             <div class="window">
                 <div class="toolsbox">
-                    <div class="toolbox-card" onclick="compile()">
+                    <div class="toolbox-card" onclick="compile(false)">
                         <img src="assets/icons/compile.png" alt="Compile">
                         <span>Compile</span>
                     </div>
@@ -32,10 +32,10 @@
                         <img src="assets/icons/log.png" alt="Logs">
                         <span>Output</span>
                     </div>
-                    <div class="toolbox-card">
+                    <!-- <div class="toolbox-card">
                         <img src="assets/icons/import.png" alt="Import Template">
                         <span>Import Template</span>
-                    </div>
+                    </div> -->
                     <div class="toolbox-card">
                         <img src="assets/icons/export.png" alt="Export Template">
                         <span>Export Template</span>
@@ -44,7 +44,8 @@
                 <div class="codebox">
                     <div class="code-editor-container-tabs">
                         <div class="tab active" data-target="inContainer">Main</div>
-                        <div class="tab" data-target="functionsInputContainer">Functions</div>
+                        <div class="tab" data-target="functionsInputContainer">Components</div>
+                        <div class="tab" data-target="stylesContainer">Styles</div>
                     </div>
                     <div class="code-editor-container">
                         <div class="line-numbers-wrapper active" id="inContainer">
@@ -53,7 +54,11 @@
                         </div>
                         <div class="line-numbers-wrapper" id="functionsInputContainer">
                             <textarea spellcheck="false" class="code-editor" id="functionsInput"
-                                placeholder="Start writing functions..."></textarea>
+                                placeholder="Start adding components..."></textarea>
+                        </div>
+                        <div class="line-numbers-wrapper" id="stylesContainer">
+                            <textarea spellcheck="false" class="code-editor" id="stylesInput"
+                                placeholder="Start designing your layout..."></textarea>
                         </div>
                     </div>
                 </div>
@@ -74,7 +79,7 @@
                     <img src="assets/icons/models.png" alt="Models">
                     <div>Class Models</div>
                 </div>
-                <div class="sidebar-card" onclick="previewHTML()">
+                <div class="sidebar-card" onclick="previewHTML(true)">
                     <img src="assets/icons/preview.png" alt="Preview">
                     <div>Preview Template</div>
                 </div>
@@ -88,9 +93,9 @@
 
     <!-- Models -->
     <div class="popups">
-        <div class="popup" id="outputWindow">
+        <div class="popup" id="loader">
             <div class="inner">
-
+                <div class="spinner"></div>
             </div>
         </div>
     </div>
