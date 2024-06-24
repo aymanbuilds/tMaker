@@ -22,4 +22,9 @@
     .toolbox-card span {
         font-size: 0.84rem;
     }
+
+    .line-numbers,
+    .code-editor{
+        font-size: 1.1rem !important;
+    }
 }
