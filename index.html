@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Maker</title>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="assets/styles/main.css">
+    <link rel="stylesheet" href="assets/styles/queries.css">
+    <link rel="stylesheet" href="assets/styles/console.css">
+</head>
+
+<body>
+    <!-- Main -->
+    <main>
+        <div class="cover"></div>
+        <section class="console">
+            <header>
+                <h1>Template Maker</h1>
+                <p>Easily create stunning website templates with our command-based tool. Transform commands into
+                    beautiful HTML and CSS designs. Start now!</p>
+            </header>
+            <div class="window">
+                <div class="toolsbox">
+                    <div class="toolbox-card" onclick="compile()">
+                        <img src="assets/icons/compile.png" alt="Compile">
+                        <span>Compile</span>
+                    </div>
+                    <div class="toolbox-card">
+                        <img src="assets/icons/log.png" alt="Logs">
+                        <span>Output</span>
+                    </div>
+                    <div class="toolbox-card">
+                        <img src="assets/icons/import.png" alt="Import Template">
+                        <span>Import Template</span>
+                    </div>
+                    <div class="toolbox-card">
+                        <img src="assets/icons/export.png" alt="Export Template">
+                        <span>Export Template</span>
+                    </div>
+                </div>
+                <div class="codebox">
+                    <div class="code-editor-container-tabs">
+                        <div class="tab active" data-target="inContainer">Main</div>
+                        <div class="tab" data-target="functionsInputContainer">Functions</div>
+                    </div>
+                    <div class="code-editor-container">
+                        <div class="line-numbers-wrapper active" id="inContainer">
+                            <textarea spellcheck="false" class="code-editor active" id="in"
+                                placeholder="Start coding..."></textarea>
+                        </div>
+                        <div class="line-numbers-wrapper" id="functionsInputContainer">
+                            <textarea spellcheck="false" class="code-editor" id="functionsInput"
+                                placeholder="Start writing functions..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <aside class="sidebar">
+            <div class="inner">
+                <div class="toggle-menu">
+                    <img src="assets/icons/slide.png" alt="Slide">
+                </div>
+
+                <div class="sidebar-card">
+                    <img src="assets/icons/ui-elements.png" alt="UI Elements">
+                    <div>Interface Elements</div>
+                </div>
+                <div class="sidebar-card">
+                    <img src="assets/icons/models.png" alt="Models">
+                    <div>Class Models</div>
+                </div>
+                <div class="sidebar-card" onclick="previewHTML()">
+                    <img src="assets/icons/preview.png" alt="Preview">
+                    <div>Preview Template</div>
+                </div>
+                <div class="sidebar-card">
+                    <img src="assets/icons/paypal.png" alt="Donation">
+                    <div>Donate</div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Models -->
+    <div class="popups">
+        <div class="popup" id="outputWindow">
+            <div class="inner">
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Javascript -->
+    <script src="assets/scripts/main.js"></script>
+    <script src="assets/scripts/console.js"></script>
+    <script src="assets/scripts/parser.js"></script>
+</body>
+
+</html>

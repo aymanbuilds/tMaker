@@ -1,0 +1,226 @@
+@font-face {
+    font-family: Rubik;
+    src: url(../fonts/rubik.ttf);
+}
+
+* {
+    font-family: Rubik;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    border: none;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    overflow: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.cover {
+    position: fixed;
+    z-index: 998;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.4s;
+}
+
+.console {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    overflow-y: auto;
+    gap: 40px;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+section header p {
+    font-size: 1rem;
+    color: #777;
+    margin-top: 10px;
+    line-height: 1.4rem;
+}
+
+.window {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.toolsbox {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.toolbox-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #eee;
+    user-select: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.toolbox-card:hover {
+    background-color: #ddd;
+}
+
+.toolbox-card img {
+    width: 24px;
+}
+
+.toolbox-card span {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.codebox {
+    flex: 1;
+    width: 100%;
+    gap: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.editable-div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    padding: 20px;
+    white-space: pre-wrap;
+    resize: none;
+    overflow: auto;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+}
+
+.editable-div::before {
+    content: attr(data-placeholder);
+    color: #aaa;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    pointer-events: none;
+}
+
+.editable-div:empty::before {
+    display: block;
+}
+
+.editable-div:empty:not(:focus)::before {
+    display: block;
+}
+
+.editable-div:not(:empty)::before {
+    display: none;
+}
+
+.sidebar {
+    width: 7rem;
+    height: 100%;
+    background-color: #f7f7f7;
+    position: relative;
+    transition: 0.4s;
+}
+
+.sidebar .inner {
+    overflow-y: auto;
+    height: 100%;
+    padding: 20px 10px;
+}
+
+.toggle-menu {
+    position: absolute;
+    z-index: 999;
+    left: -40px;
+    top: 20px;
+    width: 40px;
+    height: 50px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    background-color: #ddd;
+    display: none;
+    place-items: center;
+}
+
+.toggle-menu img {
+    width: 24px;
+}
+
+.toggle-menu img.flip {
+    transform: rotateY(180deg);
+}
+
+.sidebar-card {
+    width: 100%;
+    padding: 20px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 14px;
+    text-align: center;
+    user-select: none;
+    border-radius: 10px;
+    background-color: #eee;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.sidebar-card:last-child {
+    margin-bottom: 0;
+}
+
+.sidebar-card:hover {
+    background-color: #ddd;
+}
+
+.sidebar-card img {
+    width: 32px;
+}
+
+.sidebar-card div {
+    font-size: 0.9rem;
+    color: #444;
+}

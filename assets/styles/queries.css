@@ -1,0 +1,25 @@
+@media (max-width: 700px) {
+    .sidebar {
+        position: fixed;
+        z-index: 999;
+        right: -7rem;
+    }
+
+    .toggle-menu {
+        display: grid;
+    }
+}
+
+@media (max-width: 440px) {
+    section header p {
+        font-size: 0.84rem;
+    }
+
+    .toolbox-card {
+        padding: 4px 10px;
+    }
+
+    .toolbox-card span {
+        font-size: 0.84rem;
+    }
+}
