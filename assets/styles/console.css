@@ -31,6 +31,7 @@
 
 .line-numbers-wrapper {
     display: none;
+    position: relative;
 }
 
 .line-numbers {
@@ -49,7 +50,7 @@
     box-sizing: border-box;
     width: 100%;
     overflow: hidden;
-    min-height: 14rem;
+    min-height: 12rem;
     /* position: absolute; */
     /* top: 0; */
     margin: 0;
@@ -64,4 +65,22 @@
 
 .line-numbers-wrapper.active {
     display: flex;
+}
+
+#suggestions-box {
+    border: 1px solid #ccc;
+    background: #fff;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    min-width: 10rem;
+}
+
+#suggestions-box div {
+    padding: 8px;
+    cursor: pointer;
+}
+
+#suggestions-box div:hover {
+    background-color: #f0f0f0;
 }

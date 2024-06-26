@@ -1,110 +1,151 @@
-// $(document).ready(function () {
-//     updateScreen($("#in").val());
+document.addEventListener('DOMContentLoaded', () => {
+    const textarea = document.getElementById('in');
+    const suggestionsBox = document.getElementById('suggestions-box');
 
-//     $("#in").on("input", function () {
-//         updateScreen($(this).val());
-//     });
+    const suggestions = [
+        "center", "column", "row", "grid", "ul", "li", "container",
+        "button", "image", "img", "input", "textarea", "a", "style",
+        "anchor", "abbr", "address", "area", "article", "aside",
+        "audio", "b", "base", "bdi", "bdo", "blockquote",
+        "body", "br", "button", "canvas", "caption", "cite",
+        "code", "col", "colgroup", "data", "datalist", "dd",
+        "del", "details", "dfn", "dialog", "div", "dl",
+        "dt", "em", "embed", "fieldset", "figcaption", "figure",
+        "footer", "form", "h1", "h2", "h3", "h4",
+        "h5", "h6", "head", "header", "hr", "html",
+        "i", "iframe", "img", "input", "ins", "kbd",
+        "label", "legend", "li", "main", "map", "mark",
+        "menu", "menuitem", "meta", "meter", "nav", "noscript",
+        "object", "ol", "optgroup", "option", "output", "p",
+        "param", "picture", "pre", "progress", "q", "rp",
+        "rt", "rtc", "ruby", "s", "samp", "script",
+        "section", "select", "slot", "small", "source", "span",
+        "strong", "style", "sub", "summary", "sup", "table",
+        "tbody", "td", "template", "textarea", "tfoot", "th",
+        "thead", "time", "title", "tr", "track", "u",
+        "ul", "var", "video", "wbr",
+        'add', 'parent', 'of', 'margin', 'padding', 'html', 'text',
+        'border', 'border-radius', 'bradius', 'background', 'bg', 'color', 'value',
+        'placeholder', 'width', 'height', 'font-size', 'fsize', 'cursor',
+        'font-family', 'ffamily', 'font-weight', 'fweight', 'font-style', 'fstyle', 'text-align', 'talign',
+        'text-decoration', 'tdecoration', 'align-items', 'aitems', 'justify-content', 'jcontent',
+        'display', 'position', 'left', 'top', 'right', 'bottom',
+        'clear', 'float', 'text-shadow', 'tshadow', 'line-height', 'lheight',
+        'letter-spacing', 'lspacing', 'word-spacing', 'wspacing', 'text-transform', 'ttransform',
+        'text-indent', 'tindent', 'white-space', 'wspace', 'vertical-align', 'valign',
+        'background-color', 'bcolor', 'background-image', 'bimage',
+        'background-position', 'bposition', 'background-size', 'bsize',
+        'background-repeat', 'brepeat', 'background-attachment', 'battach',
+        'border-width', 'bwidth', 'border-style', 'bstyle', 'border-color', 'bcolor',
+        'border-top', 'btop', 'border-right', 'bright', 'border-bottom', 'bbottom',
+        'border-left', 'bleft',
+        'border-top-width', 'btwidth', 'border-right-width', 'brwidth',
+        'border-bottom-width', 'bbwidth', 'border-left-width', 'blwidth',
+        'border-top-style', 'btstyle', 'border-right-style', 'brstyle',
+        'border-bottom-style', 'bbstyle', 'z-index', 'zindex', 'overflow', 'overflowy', 'overflowx',
+        'visibility', 'visibility', 'opacity', 'opacity', 'box-shadow', 'bshadow',
+        'border-left-style', 'blstyle', 'border-top-color', 'btcolor',
+        'border-right-color', 'brcolor', 'border-bottom-color', 'bbcolor',
+        'outline', 'outline', 'outline-width', 'owidth', 'outline-style', 'ostyle',
+        'outline-color', 'ocolor', 'outline-offset', 'ooffset',
 
-//     function updateScreen(text) {
-//         $("#out").html(colorize(text.replace(/\n/g, "<br>").replace(/\t/g, "&#9;")));
-//         syncScroll();
-//     }
+        'transition', 'animation', 'clip', 'filter', 'flex', 'order', 'grid', 'gap',
 
-//     $("#in").on('scroll', function () {
-//         syncScroll();
-//     });
+        'box-sizing', 'bsizing', 'flex-grow', 'fgrow', 'flex-shrink', 'fshrink',
+        'flex-basis', 'fbasis', 'flex-direction', 'fdirection', 'flex-wrap', 'fwrap',
+        'grid-template-columns', 'gtcolumns', 'grid-template-rows', 'gtrows',
+        'grid-template-areas', 'gtareas', 'grid-column-gap', 'gcgap',
+        'grid-row-gap', 'grgap', 'grid-area', 'garea', 'grid-column', 'gcolumn',
+        'grid-row', 'grow', 'grid-auto-flow', 'gautoflow', 'grid-auto-columns', 'gacolumns',
+        'grid-auto-rows', 'garows', 'place-items', 'pitems', 'place-content', 'pcontent',
+        'place-self', 'pself', 'align-content', 'acontent', 'align-self', 'aself',
+        'justify-self', 'jself', 'cols',
+        'border-top-left-radius', 'btlradius', 'border-top-right-radius', 'btrradius',
+        'border-bottom-left-radius', 'bblradius', 'border-bottom-right-radius', 'bbrradius',
+        'src', 'href'];
 
-//     function syncScroll() {
-//         $("#out").scrollTop($("#in").scrollTop());
-//         $("#out").scrollLeft($("#in").scrollLeft());
-//     }
+    textarea.addEventListener('keydown', (event) => {
+        if (event.ctrlKey && event.code === 'Space') {
+            event.preventDefault();
+            showSuggestionsBox();
+        }
+    });
 
-//     function escapeRegExp(string) {
-//         return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
-//     }
+    function getCaretCoordinates() {
+        const textareaClone = document.createElement('div');
+        const style = getComputedStyle(textarea);
+        Array.from(style).forEach(prop => {
+            textareaClone.style[prop] = style[prop];
+        });
 
-//     function replaceKeyword(text, keyword) {
-//         // Escape keyword to handle special characters in regex
-//         const escapedKeyword = escapeRegExp(keyword);
+        textareaClone.style.position = 'absolute';
+        textareaClone.style.visibility = 'hidden';
+        textareaClone.style.whiteSpace = 'pre-wrap';
+        textareaClone.style.wordWrap = 'break-word';
 
-//         // Create a regex pattern with word boundaries and either space or newline
-//         const regex = new RegExp(`\\b${escapedKeyword}(?=\\s|<br>|$)`, 'gi');
+        const value = textarea.value.substring(0, textarea.selectionStart);
+        textareaClone.textContent = value;
 
-//         // Replace occurrences matching the regex pattern with the highlighted span
-//         return text.replace(regex, `<span class="highlight-element">$&</span>`);
-//     }
+        const caretSpan = document.createElement('span');
+        caretSpan.textContent = value.length ? value[value.length - 1] : '.';
+        textareaClone.appendChild(caretSpan);
 
-//     function colorize(text) {
-//         // var keywords = ["ADD"];
-//         // for (const keyword of keywords) {
-//         //     const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
-//         //     text = text.replace(regex, `<span class="highlight-keyword">$&</span>`);
-//         // }
+        document.body.appendChild(textareaClone);
 
-//         // var elements = [
-//         //     "TITLE", "BASE", "LINK", "META", "STYLE", "HEADER", "NAV", "MAIN", "SECTION", "ARTICLE", "ASIDE", "FOOTER",
-//         //     "ADDRESS", "P", "H1", "H2", "H3", "H4", "H5", "H6", "BLOCKQUOTE", "HR", "PRE", "A", "EM", "STRONG", "SMALL",
-//         //     "S", "CITE", "Q", "DFN", "ABBR", "RUBY", "RB", "RT", "RTC", "RP", "DATA", "TIME", "CODE", "VAR", "SAMP",
-//         //     "KBD", "SUB", "SUP", "I", "B", "U", "MARK", "BDI", "BDO", "SPAN", "BR", "WBR", "IMG", "IFRAME", "EMBED",
-//         //     "OBJECT", "PARAM", "VIDEO", "AUDIO", "SOURCE", "TRACK", "MAP", "AREA", "CANVAS", "SVG", "MATH", "PICTURE",
-//         //     "SOURCE", "SCRIPT", "NOSCRIPT", "TEMPLATE", "CANVAS", "INS", "DEL", "TABLE", "CAPTION", "COLGROUP", "COL",
-//         //     "TBODY", "THEAD", "TFOOT", "TR", "TD", "TH", "FORM", "LABEL", "INPUT", "BUTTON", "SELECT", "DATALIST",
-//         //     "OPTGROUP", "OPTION", "TEXTAREA", "OUTPUT", "PROGRESS", "METER", "FIELDSET", "LEGEND", "DETAILS", "SUMMARY",
-//         //     "DIALOG", "MENU", "MENUITEM", "SLOT", "TEMPLATE"
-//         // ];
-//         // for (const keyword of elements) {
-//         //     text = replaceKeyword(text, keyword);
-//         // }
+        const { offsetTop: top, offsetLeft: left, offsetHeight: height } = caretSpan;
+        document.body.removeChild(textareaClone);
 
-//         // var properties = ["BACKGROUND"];
-//         // for (const keyword of properties) {
-//         //     const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
-//         //     text = text.replace(regex, `<span class="highlight-property">$&</span>`);
-//         // }
+        return { top, left, height };
+    }
 
-//         // const rgbRegex = /rgb\(\d{1,3},\s*\d{1,3},\s*\d{1,3}\)/gi;
-//         // const hexRegex = /#(?:[0-9a-fA-F]{3}){1,2}\b/g;
-//         // const colorNameRegex = /\b(?:aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|darkgrey|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkslategrey|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dimgrey|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|green|greenyellow|grey|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgray|lightgreen|lightgrey|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightslategrey|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|rebeccapurple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|slategrey|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|whitesmoke|yellow|yellowgreen)\b/gi;
+    function showSuggestionsBox() {
+        const { top, left, height } = getCaretCoordinates();
+        const cursorPosition = textarea.selectionStart;
+        const textBeforeCursor = textarea.value.substring(0, cursorPosition);
+        const match = textBeforeCursor.match(/(\S+)$/);
+        const query = match ? match[0] : '';
 
-//         // text = text.replace(rgbRegex, function (match) {
-//         //     const textColor = getContrastYIQ(match);
-//         //     return `<span class="color-highlight" style="background-color:${match}; color:${textColor};">${match}</span>`;
-//         // });
+        const filteredSuggestions = suggestions.filter(item => item.startsWith(query));
 
-//         // text = text.replace(hexRegex, function (match) {
-//         //     const textColor = getContrastYIQ(match);
-//         //     return `<span class="color-highlight" style="background-color:${match}; color:${textColor};">${match}</span>`;
-//         // });
+        suggestionsBox.style.top = `${top + height}px`;
+        suggestionsBox.style.left = `${left}px`;
+        suggestionsBox.style.display = 'block';
 
-//         // text = text.replace(colorNameRegex, function (match) {
-//         //     const textColor = getContrastYIQ(match);
-//         //     return `<span class="color-highlight" style="background-color:${match}; color:${textColor};">${match}</span>`;
-//         // });
+        suggestionsBox.innerHTML = filteredSuggestions.length
+            ? filteredSuggestions.map(item => `<div>${item}</div>`).join('')
+            : '<div>No suggestions</div>';
+    }
 
-//         return text;
-//     }
+    document.addEventListener('click', (event) => {
+        // if (!suggestionsBox.contains(event.target) && event.target !== textarea) {
 
-//     function getContrastYIQ(color) {
-//         var r, g, b;
-//         if (color.match(/^rgb/)) {
-//             color = color.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-//             r = color[1];
-//             g = color[2];
-//             b = color[3];
-//         } else if (color.match(/^#/)) {
-//             color = +("0x" + color.slice(1).replace(color.length < 5 && /./g, '$&$&'));
-//             r = color >> 16;
-//             g = color >> 8 & 255;
-//             b = color & 255;
-//         } else {
-//             var ctx = document.createElement('canvas').getContext('2d');
-//             ctx.fillStyle = color;
-//             var rgb = ctx.fillStyle.match(/\d+/g);
-//             r = rgb[0];
-//             g = rgb[1];
-//             b = rgb[2];
-//         }
-//         var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-//         return (yiq >= 128) ? '#333' : '#fff';
-//     }
-// });
+        // }
+        suggestionsBox.style.display = 'none';
+    });
+
+    suggestionsBox.addEventListener('click', (event) => {
+        if (event.target.tagName === 'DIV') {
+            const suggestion = event.target.textContent;
+            const cursorPosition = textarea.selectionStart;
+            const textBeforeCursor = textarea.value.substring(0, cursorPosition);
+            const textAfterCursor = textarea.value.substring(cursorPosition);
+
+            // Replace the word if the suggestion is not empty
+            if (suggestion.trim() !== '') {
+                // Find the start of the current word before the cursor
+                const match = textBeforeCursor.match(/(\S+)$/);
+                const wordStart = match ? textBeforeCursor.lastIndexOf(match[0]) : 0;
+
+                // Construct the new textarea value with the replaced suggestion
+                const newText = textBeforeCursor.substring(0, wordStart) + suggestion + textAfterCursor;
+
+                // Update textarea value and cursor position
+                textarea.value = newText;
+                const newCursorPosition = wordStart + suggestion.length;
+                textarea.selectionStart = textarea.selectionEnd = newCursorPosition;
+            }
+
+            suggestionsBox.style.display = 'none';
+        }
+    });
+});

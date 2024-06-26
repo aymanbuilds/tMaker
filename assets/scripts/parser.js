@@ -127,6 +127,14 @@ function compile(preview) {
 
     elementsArray = [];
     outputArray = [];
+
+    let styles = document.getElementById('stylesInput').value;
+    const stylesLines = styles.trim().split('\n');
+    stylesLines.forEach(line => {
+        if (line !== '')
+            parseSingleCommand(line, null);
+    });
+
     let commands = document.getElementById('in').value;
     const lines = commands.trim().split('\n');
     lines.forEach(line => {
@@ -747,6 +755,14 @@ function previewHTML(build) {
 
     // Collect styles from style elements
     let styleContent = `
+     *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body,html{
+        height: 100%;
+    }
     .center{
         display: flex;
         flex-direction: column;
@@ -802,4 +818,103 @@ function previewHTML(build) {
 
     // Close the document to make sure the content is fully loaded
     previewWindow.document.close();
+}
+
+function saveToFile() {
+    compile(false);
+
+    setTimeout(() => {
+        // Create a new window and hide it
+        const screenWidth = screen.width;
+        const screenHeight = screen.height;
+        const previewWindow = window.open('', 'Preview', `width=${screenWidth},height=${screenHeight},visible=false`);
+        previewWindow.document.body.style.display = 'none'; // Hide the body to keep the window hidden
+
+        // Check if the new window was successfully created
+        if (!previewWindow) {
+            console.error('Failed to open preview window.');
+            return;
+        }
+
+        // Write a basic HTML structure to the new window
+        previewWindow.document.write('<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Preview</title></head><body></body></html>');
+
+        // Collect styles from style elements
+        let styleContent = `
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body,html{
+            height: 100%;
+        }
+        .center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .column {
+            display: flex;
+            flex-direction: column;
+        }
+        .row {
+            display: flex;
+            flex-direction: row;
+        }
+        .grid {
+            display: grid;
+        }
+        `;
+
+        elementsArray.forEach(element => {
+            if (element.tagName.toLowerCase() === 'style') {
+                styleContent += `.${element.id} {
+            ${element.style.cssText}
+            }
+            `;
+            }
+        });
+
+        // Create a single <style> element to hold all styles
+        if (styleContent) {
+            const styleElement = previewWindow.document.createElement('style');
+            styleElement.type = 'text/css';
+            styleElement.textContent = styleContent;
+            previewWindow.document.head.appendChild(styleElement);
+        }
+
+        // Append each non-style element in elementsArray to the body of the new window's document
+        elementsArray.forEach(element => {
+            if (element.tagName.toLowerCase() !== 'style') {
+                // Check if element has parent, do not append directly to body
+                if (!element.parentElement) {
+                    previewWindow.document.body.appendChild(element);
+                }
+
+                // Append children to the element if it contains any
+                if (element.children.length > 0) {
+                    Array.from(element.children).forEach(child => {
+                        element.appendChild(child);
+                    });
+                }
+            }
+        });
+
+        // Close the document to make sure the content is fully loaded
+        previewWindow.document.close();
+
+        // Generate HTML content as a string
+        const htmlContent = previewWindow.document.documentElement.outerHTML;
+
+        // Create a Blob containing the HTML content
+        const blob = new Blob([htmlContent], { type: 'text/html' });
+
+        // Prompt user to save the file
+        saveAs(blob, 'preview.html');
+
+        // Close the preview window after saving
+        previewWindow.close();
+    }, 1000);
 }

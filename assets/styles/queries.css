@@ -8,6 +8,12 @@
     .toggle-menu {
         display: grid;
     }
+
+    #output {
+        width: 94%;
+        height: 94%;
+        padding: 20px;
+    }
 }
 
 @media (max-width: 440px) {

@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="assets/styles/main.css">
     <link rel="stylesheet" href="assets/styles/queries.css">
     <link rel="stylesheet" href="assets/styles/console.css">
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 
 <body>
@@ -28,7 +31,7 @@
                         <img src="assets/icons/compile.png" alt="Compile">
                         <span>Compile</span>
                     </div>
-                    <div class="toolbox-card">
+                    <div class="toolbox-card" onclick="showOutput()">
                         <img src="assets/icons/log.png" alt="Logs">
                         <span>Output</span>
                     </div>
@@ -36,7 +39,7 @@
                         <img src="assets/icons/import.png" alt="Import Template">
                         <span>Import Template</span>
                     </div> -->
-                    <div class="toolbox-card">
+                    <div class="toolbox-card" onclick="saveToFile()">
                         <img src="assets/icons/export.png" alt="Export Template">
                         <span>Export Template</span>
                     </div>
@@ -51,6 +54,7 @@
                         <div class="line-numbers-wrapper active" id="inContainer">
                             <textarea spellcheck="false" class="code-editor active" id="in"
                                 placeholder="Start coding..."></textarea>
+                            <div id="suggestions-box" style="display: none; position: absolute;"></div>
                         </div>
                         <div class="line-numbers-wrapper" id="functionsInputContainer">
                             <textarea spellcheck="false" class="code-editor" id="functionsInput"
@@ -96,6 +100,18 @@
         <div class="popup" id="loader">
             <div class="inner">
                 <div class="spinner"></div>
+            </div>
+        </div>
+        <div class="popup" id="output">
+            <header>
+                <h2>Output</h2>
+                <p>Below are the results of your recent commands:</p>
+                <img id="close-output-popup" class="close" src="assets/icons/close.png" alt="Close">
+            </header>
+            <div class="list">
+                <div class="inner">
+
+                </div>
             </div>
         </div>
     </div>

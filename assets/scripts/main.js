@@ -109,8 +109,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function showLoader() {
     document.querySelector('.popups').classList.add('visible');
+    document.querySelector('#loader').style.display = "block";
 }
 
 function hideLoader() {
     document.querySelector('.popups').classList.remove('visible');
+    document.querySelector('#loader').style.display = "none";
 }
+
+function showOutput() {
+    const popupInner = document.querySelector('#output .inner');
+    popupInner.innerHTML = '';
+
+    outputArray.forEach(item => {
+        const messageDiv = document.createElement('div');
+        messageDiv.textContent = item.message;
+        messageDiv.classList.add('output-message');
+        messageDiv.classList.add(item.success ? 'success' : 'error');
+        popupInner.appendChild(messageDiv);
+    });
+
+    document.querySelector('.popups').classList.add('visible');
+    document.querySelector('#output').style.display = "flex";
+}
+
+function hideOutput() {
+    document.querySelector('.popups').classList.remove('visible');
+    document.querySelector('#output').style.display = "none";
+}
+
+document.getElementById('close-output-popup').addEventListener('click', function() {
+    hideOutput() 
+});
