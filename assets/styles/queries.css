@@ -30,7 +30,8 @@
     }
 
     .line-numbers,
-    .code-editor{
+    .code-editor,
+    .custom-area {
         font-size: 1.1rem !important;
     }
 }
