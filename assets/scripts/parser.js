@@ -79,6 +79,10 @@ function compile(preview) {
 
                 let bodyCommands = "";
 
+                body = body.replace(/(\w+)\s+props\s*\(([^)]+)\)/g, (match, firstWord, properties) => {
+                    return properties.split(',').map(prop => `${firstWord} ${prop.trim()}`).join('\n');
+                });
+
                 // Split the body into lines, trim each line, and filter out empty lines
                 let bodyLines = body.split('\n')
                     .map(line => line.trim())
@@ -95,7 +99,7 @@ function compile(preview) {
                     }
                     else if (words.length >= 3 &&
                         words[0] !== 'add' && isProperty(words[1])
-                        || words[1] === 'style'
+                        || words[1] === 'style' || words[1] === 'props'
                         //&& !paramArray.includes(words[0])
                     ) {
                         if (words[0] !== firstParam) {
@@ -112,9 +116,6 @@ function compile(preview) {
                 });
 
                 body = bodyCommands.trim();
-                body = body.replace(/(\w+)\s+props\s*\(([^)]+)\)/g, (match, firstWord, properties) => {
-                    return properties.split(',').map(prop => `${firstWord} ${prop.trim()}`).join('\n');
-                });
 
                 let functionObject = {
                     type: type.trim(),
@@ -137,7 +138,7 @@ function compile(preview) {
     styles = styles.replace(/(\w+)\s+props\s*\(([^)]+)\)/g, (match, firstWord, properties) => {
         return properties.split(',').map(prop => `${firstWord} ${prop.trim()}`).join('\n');
     });
-    
+
     const stylesLines = styles.trim().split('\n');
     stylesLines.forEach(line => {
         if (line !== '')
@@ -691,7 +692,7 @@ function parseSingleCommand(command, functionsArray) {
                         }
                         else if (words.length >= 3 &&
                             words[0] !== 'add' && isProperty(words[1])
-                            || words[1] === 'style'
+                            || words[1] === 'style' || words[1] === 'props'
                             //&& !paramArray.includes(words[0])
                         ) {
                             if (words[0] === func.parameters[0])
