@@ -18,7 +18,7 @@ function getElementById(id) {
 }
 
 function isProperty(property) {
-    return ['margin', 'padding', 'html', 'text',
+    return ['list-style', 'lstyle', 'margin', 'padding', 'html', 'text',
         'border', 'border-radius', 'bradius', 'background', 'bg', 'color', 'value',
         'placeholder', 'width', 'height', 'font-size', 'fsize', 'cursor',
         'font-family', 'ffamily', 'font-weight', 'fweight', 'font-style', 'fstyle', 'text-align', 'talign',
@@ -56,7 +56,8 @@ function isProperty(property) {
         'justify-self', 'jself', 'cols',
         'border-top-left-radius', 'btlradius', 'border-top-right-radius', 'btrradius',
         'border-bottom-left-radius', 'bblradius', 'border-bottom-right-radius', 'bbrradius',
-        'src', 'href'].includes(property);
+        'src', 'href', 'max-width', 'maxwidth', 'minwidth', 'min-width',
+        'max-height', 'maxheight', 'minheight', 'min-height'].includes(property);
 }
 
 // Function to parse multiple commands split by lines
@@ -111,6 +112,9 @@ function compile(preview) {
                 });
 
                 body = bodyCommands.trim();
+                body = body.replace(/(\w+)\s+props\s*\(([^)]+)\)/g, (match, firstWord, properties) => {
+                    return properties.split(',').map(prop => `${firstWord} ${prop.trim()}`).join('\n');
+                });
 
                 let functionObject = {
                     type: type.trim(),
@@ -118,6 +122,7 @@ function compile(preview) {
                     parameters: paramArray,
                     body: body.trim()
                 };
+
                 functionsArray.push(functionObject);
             }
         }
@@ -129,6 +134,10 @@ function compile(preview) {
     outputArray = [];
 
     let styles = document.getElementById('stylesInput').value;
+    styles = styles.replace(/(\w+)\s+props\s*\(([^)]+)\)/g, (match, firstWord, properties) => {
+        return properties.split(',').map(prop => `${firstWord} ${prop.trim()}`).join('\n');
+    });
+    
     const stylesLines = styles.trim().split('\n');
     stylesLines.forEach(line => {
         if (line !== '')
@@ -136,6 +145,9 @@ function compile(preview) {
     });
 
     let commands = document.getElementById('in').value;
+    commands = commands.replace(/(\w+)\s+props\s*\(([^)]+)\)/g, (match, firstWord, properties) => {
+        return properties.split(',').map(prop => `${firstWord} ${prop.trim()}`).join('\n');
+    });
     const lines = commands.trim().split('\n');
     lines.forEach(line => {
         if (line !== '')
@@ -144,6 +156,7 @@ function compile(preview) {
 
     setTimeout(() => {
         hideLoader();
+        document.getElementById('output-title').innerText = `output (${outputArray.length})`;
         if (preview) {
             previewHTML(false);
         }
@@ -244,12 +257,29 @@ function formatCssPropertyAndValue(property, value) {
         'pself': 'place-self',
         'acontent': 'align-content',
         'aself': 'align-self',
-        'jself': 'justify-self'
+        'jself': 'justify-self',
+        'lstyle': 'list-style',
+        'maxwidth': 'max-width',
+        'minwidth': 'min-width',
+        'maxheight': 'max-height',
+        'minheight': 'min-height',
     };
 
     // Dictionary to handle specific value conversions
     const valueMap = {
-
+        'sbetween': 'space-between',
+        'saround': 'space-around',
+        'sevenly': 'space-evenly',
+        'fstart': 'flex-start',
+        'fend': 'flex-end',
+        'rreverse': 'row-reverse',
+        'creverse': 'column-reverse',
+        'wreverse': 'wrap-reverse',
+        'nrepeat': 'no-repeat',
+        'rx': 'repeat-x',
+        'ry': 'repeat-y',
+        'ttop': 'text-top',
+        'tbottom': 'text-bottom'
     };
 
     // Convert property if it exists in the propertyMap
@@ -400,45 +430,7 @@ function parseSingleCommand(command, functionsArray) {
         'wbr': 'wbr'
     };
 
-    if (parts.length >= 3 && parts[0] !== 'add' && ['margin', 'padding', 'html', 'text',
-        'border', 'border-radius', 'bradius', 'background', 'bg', 'color', 'value',
-        'placeholder', 'width', 'height', 'font-size', 'fsize', 'cursor',
-        'font-family', 'ffamily', 'font-weight', 'fweight', 'font-style', 'fstyle', 'text-align', 'talign',
-        'text-decoration', 'tdecoration', 'align-items', 'aitems', 'justify-content', 'jcontent',
-        'display', 'position', 'left', 'top', 'right', 'bottom',
-        'clear', 'float', 'text-shadow', 'tshadow', 'line-height', 'lheight',
-        'letter-spacing', 'lspacing', 'word-spacing', 'wspacing', 'text-transform', 'ttransform',
-        'text-indent', 'tindent', 'white-space', 'wspace', 'vertical-align', 'valign',
-        'background-color', 'bcolor', 'background-image', 'bimage',
-        'background-position', 'bposition', 'background-size', 'bsize',
-        'background-repeat', 'brepeat', 'background-attachment', 'battach',
-        'border-width', 'bwidth', 'border-style', 'bstyle', 'border-color', 'bcolor',
-        'border-top', 'btop', 'border-right', 'bright', 'border-bottom', 'bbottom',
-        'border-left', 'bleft',
-        'border-top-width', 'btwidth', 'border-right-width', 'brwidth',
-        'border-bottom-width', 'bbwidth', 'border-left-width', 'blwidth',
-        'border-top-style', 'btstyle', 'border-right-style', 'brstyle',
-        'border-bottom-style', 'bbstyle', 'z-index', 'zindex', 'overflow', 'overflowy', 'overflowx',
-        'visibility', 'visibility', 'opacity', 'opacity', 'box-shadow', 'bshadow',
-        'border-left-style', 'blstyle', 'border-top-color', 'btcolor',
-        'border-right-color', 'brcolor', 'border-bottom-color', 'bbcolor',
-        'outline', 'outline', 'outline-width', 'owidth', 'outline-style', 'ostyle',
-        'outline-color', 'ocolor', 'outline-offset', 'ooffset',
-
-        'transition', 'animation', 'clip', 'filter', 'flex', 'order', 'grid', 'gap',
-
-        'box-sizing', 'bsizing', 'flex-grow', 'fgrow', 'flex-shrink', 'fshrink',
-        'flex-basis', 'fbasis', 'flex-direction', 'fdirection', 'flex-wrap', 'fwrap',
-        'grid-template-columns', 'gtcolumns', 'grid-template-rows', 'gtrows',
-        'grid-template-areas', 'gtareas', 'grid-column-gap', 'gcgap',
-        'grid-row-gap', 'grgap', 'grid-area', 'garea', 'grid-column', 'gcolumn',
-        'grid-row', 'grow', 'grid-auto-flow', 'gautoflow', 'grid-auto-columns', 'gacolumns',
-        'grid-auto-rows', 'garows', 'place-items', 'pitems', 'place-content', 'pcontent',
-        'place-self', 'pself', 'align-content', 'acontent', 'align-self', 'aself',
-        'justify-self', 'jself', 'cols',
-        'border-top-left-radius', 'btlradius', 'border-top-right-radius', 'btrradius',
-        'border-bottom-left-radius', 'bblradius', 'border-bottom-right-radius', 'bbrradius',
-        'src', 'href'].includes(parts[1])) {
+    if (parts.length >= 3 && parts[0] !== 'add' && isProperty(parts[1])) {
         const id = parts[0];
         let property = parts[1];
         let sideOrValue = parts[2];
@@ -541,7 +533,7 @@ function parseSingleCommand(command, functionsArray) {
             }
             else if (property === 'background' || property === 'color') {
                 const colorNameRegex = /\b(?:aliceblue|antiquewhite|aqua|white|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|darkgrey|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkslategrey|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dimgrey|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|green|greenyellow|grey|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgray|lightgreen|lightgrey|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightslategrey|lightsteelblue|lightyellow|lime|limegreen|linen|magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|rebeccapurple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|slategrey|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|whitesmoke|yellow|yellowgreen)\b/gi;
-
+                sideOrValue = parts.slice(2).join(' ');
                 if (sideOrValue.startsWith('#') || sideOrValue.startsWith('rgb') || sideOrValue.startsWith('hsl') || colorNameRegex.test(sideOrValue)) {
                     if (property === 'background') {
                         element.style.backgroundColor = sideOrValue;
@@ -725,6 +717,22 @@ function parseSingleCommand(command, functionsArray) {
             outputArray.push({ 'success': false, 'message': "Invalid command format." });
         }
     }
+    // else if (parts.length > 2 && parts[1] === 'props') {
+    //     const id = parts[0];
+    //     let side = parts.slice(2).join(' ');
+
+    //     if (elementExists(id)) {
+    //         const props = side.split(",");
+
+    //         props.forEach(property => {
+    //             parseS(`${id} ${property.trim()}`);
+    //         });
+    //     }
+    //     else {
+    //         console.log(`Element with ID '${id}' does not exist.`);
+    //         outputArray.push({ 'success': false, 'message': `Element with ID '${id}' does not exist.` });
+    //     }
+    // }
     else {
         console.log(`Invalid command syntax: ${command}`);
         outputArray.push({ 'success': false, 'message': `Invalid command syntax: ${command}` });
@@ -755,10 +763,13 @@ function previewHTML(build) {
 
     // Collect styles from style elements
     let styleContent = `
-     *{
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+    *{
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        font-family: "Montserrat", sans-serif;
     }
     body,html{
         height: 100%;
@@ -841,10 +852,13 @@ function saveToFile() {
 
         // Collect styles from style elements
         let styleContent = `
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
         *{
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: "Montserrat", sans-serif;
         }
         body,html{
             height: 100%;

@@ -18,15 +18,14 @@
 }
 
 .code-editor-container {
-    overflow-y: auto;
-    overflow-x: auto;
+    overflow-y: visible;
+    overflow-x: visible;
     /* border-top: 1px solid #ccc; */
     width: 100%;
     /* height: 100%; */
     position: relative;
-    padding: 10px 20px;
-    height: 100%;
     margin-top: 20px;
+    min-height: 12rem;
 }
 
 .line-numbers-wrapper {
@@ -47,20 +46,25 @@
 }
 
 .code-editor {
-    box-sizing: border-box;
     width: 100%;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
     min-height: 12rem;
-    /* position: absolute; */
-    /* top: 0; */
+    left: 40px;
     margin: 0;
     font-size: 1.3rem;
     letter-spacing: 1px;
     line-height: 1.6;
-    line-break: anywhere;
-    white-space: pre-wrap;
+    white-space: nowrap;
+    word-wrap: break-word;
     color: #333;
     resize: none;
+    z-index: 2;
+    caret-color: #555555;
+    width: 95%;
+    background-color: transparent;
+    color: transparent;
+    position: absolute;
 }
 
 .line-numbers-wrapper.active {
@@ -83,4 +87,24 @@
 
 #suggestions-box div:hover {
     background-color: #f0f0f0;
+}
+
+.backdrop {
+    position: absolute;
+    width: 100%;
+    left: 40px;
+    z-index: 1;
+    border: 2px solid transparent;
+    overflow: hidden;
+    width: 95%;
+    pointer-events: none;
+}
+
+.custom-area {
+    white-space: pre;
+    word-wrap: break-word;
+    overflow: hidden;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    line-height: 1.6;
 }
