@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             textareaClone.style.position = 'absolute';
             textareaClone.style.visibility = 'hidden';
-            textareaClone.style.whiteSpace = 'pre-wrap';
+            textareaClone.style.whiteSpace = 'pre';
             textareaClone.style.wordWrap = 'break-word';
 
             const value = textarea.value.substring(0, textarea.selectionStart);
@@ -225,19 +225,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const textBeforeCursor = textarea.value.substring(0, cursorPosition);
             const match = textBeforeCursor.match(/(\S+)$/);
             const query = match ? match[0] : '';
-
+        
             const filteredSuggestions = suggestions.filter(item => item.startsWith(query));
-
+        
+            // Adjust for horizontal scroll
+            const scrollLeft = textarea.scrollLeft;
+        
             suggestionsBox.style.top = `${top + height}px`;
-            suggestionsBox.style.left = `${left}px`;
+            suggestionsBox.style.left = `${left - scrollLeft}px`;
             suggestionsBox.style.display = 'block';
-
+        
             suggestionsBox.innerHTML = filteredSuggestions.length
-                ? filteredSuggestions.map(item => `<div>${item}</div>`).join('')
-                : '<div>No suggestions</div>';
-
+                ? filteredSuggestions.map(item => `<div class="suggestion-item">${item}</div>`).join('')
+                : '<div class="no-suggestions">No suggestions</div>';
+        
             activeTextarea = textarea; // Set active textarea for suggestion handling
-        }
+        }        
     });
 
     // Hide suggestions box when clicking outside of it or the textareas
