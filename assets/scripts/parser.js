@@ -60,6 +60,40 @@ function isProperty(property) {
         'max-height', 'maxheight', 'minheight', 'min-height'].includes(property);
 }
 
+function parseProps(input) {
+    return input.replace(/(\w+)\s+props\s*\[([^\]]*)\]/g, (match, firstWord, properties) => {
+        let propsArray = [];
+        let tempProp = '';
+        let bracketsCount = 0;
+        let insideFunction = false;
+
+        for (let i = 0; i < properties.length; i++) {
+            if (properties[i] === '(') {
+                bracketsCount++;
+                insideFunction = true;
+            } else if (properties[i] === ')') {
+                bracketsCount--;
+                if (bracketsCount === 0) {
+                    insideFunction = false;
+                }
+            }
+
+            if (properties[i] === ',' && bracketsCount === 0 && !insideFunction) {
+                propsArray.push(tempProp.trim());
+                tempProp = '';
+            } else {
+                tempProp += properties[i];
+            }
+        }
+
+        if (tempProp.trim()) {
+            propsArray.push(tempProp.trim());
+        }
+
+        return propsArray.map(prop => `${firstWord} ${prop.trim()}`).join('\n');
+    });
+}
+
 // Function to parse multiple commands split by lines
 function compile(preview) {
     showLoader();
@@ -79,9 +113,10 @@ function compile(preview) {
 
                 let bodyCommands = "";
 
-                body = body.replace(/(\w+)\s+props\s*\(([^)]+)\)/g, (match, firstWord, properties) => {
-                    return properties.split(',').map(prop => `${firstWord} ${prop.trim()}`).join('\n');
-                });
+                // body = body.replace(/(\w+)\s+props\s*\(([^)]+)\)/g, (match, firstWord, properties) => {
+                //     return properties.split(',').map(prop => `${firstWord} ${prop.trim()}`).join('\n');
+                // });
+                body = parseProps(body);
 
                 // Split the body into lines, trim each line, and filter out empty lines
                 let bodyLines = body.split('\n')
@@ -99,7 +134,7 @@ function compile(preview) {
                     }
                     else if (words.length >= 3 &&
                         words[0] !== 'add' && isProperty(words[1])
-                        || words[1] === 'style' || words[1] === 'props'
+                        || words[1] === 'style' || words[1] === 'props' || words[1] == 'attr'
                         //&& !paramArray.includes(words[0])
                     ) {
                         if (words[0] !== firstParam) {
@@ -135,9 +170,10 @@ function compile(preview) {
     outputArray = [];
 
     let styles = document.getElementById('stylesInput').value;
-    styles = styles.replace(/(\w+)\s+props\s*\(([^)]+)\)/g, (match, firstWord, properties) => {
-        return properties.split(',').map(prop => `${firstWord} ${prop.trim()}`).join('\n');
-    });
+    // styles = styles.replace(/(\w+)\s+props\s*\(([^)]+)\)/g, (match, firstWord, properties) => {
+    //     return properties.split(',').map(prop => `${firstWord} ${prop.trim()}`).join('\n');
+    // });
+    styles = parseProps(styles);
 
     const stylesLines = styles.trim().split('\n');
     stylesLines.forEach(line => {
@@ -146,10 +182,9 @@ function compile(preview) {
     });
 
     let commands = document.getElementById('in').value;
-    commands = commands.replace(/(\w+)\s+props\s*\(([^)]+)\)/g, (match, firstWord, properties) => {
-        return properties.split(',').map(prop => `${firstWord} ${prop.trim()}`).join('\n');
-    });
+    commands = parseProps(commands);
     const lines = commands.trim().split('\n');
+
     lines.forEach(line => {
         if (line !== '')
             parseSingleCommand(line, functionsArray);
@@ -446,7 +481,13 @@ function parseSingleCommand(command, functionsArray) {
                 console.log(`Set innerHTML of element with ID '${id}' to '${parts.slice(2).join(' ')}'.`);
                 outputArray.push({ 'success': true, 'message': `Set innerHTML of element with ID '${id}' to '${parts.slice(2).join(' ')}'.` });
             } else if (property === 'text') {
-                element.textContent = parts.slice(2).join(' ');
+                if (element.tagName.toLowerCase() === 'input' || element.tagName.toLowerCase() === 'textarea') {
+                    // Set value for input or textarea
+                    element.value = parts.slice(2).join(' ');
+                } else {
+                    // Set textContent for other types of elements
+                    element.textContent = parts.slice(2).join(' ');
+                }
 
                 console.log(`Set textContent of element with ID '${id}' to '${parts.slice(2).join(' ')}'.`);
                 outputArray.push({ 'success': true, 'message': `Set textContent of element with ID '${id}' to '${parts.slice(2).join(' ')}'.` });
@@ -652,7 +693,7 @@ function parseSingleCommand(command, functionsArray) {
             console.log(`Element with ID '${id}' does not exist.`);
             outputArray.push({ 'success': false, 'message': `Element with ID '${id}' does not exist.` });
         }
-    } else if (parts[0] === 'exec') {
+    } else if (parts.length >= 2 && parts[0] === 'exec') {
         const nameRegex = /(?:exec\s+)?(\w+)\s*\(/;
         const nameMatch = command.match(nameRegex);
 
@@ -692,7 +733,7 @@ function parseSingleCommand(command, functionsArray) {
                         }
                         else if (words.length >= 3 &&
                             words[0] !== 'add' && isProperty(words[1])
-                            || words[1] === 'style' || words[1] === 'props'
+                            || words[1] === 'style' || words[1] === 'props' || words[1] == 'attr'
                             //&& !paramArray.includes(words[0])
                         ) {
                             if (words[0] === func.parameters[0])
@@ -717,26 +758,29 @@ function parseSingleCommand(command, functionsArray) {
             console.error("Invalid command format.");
             outputArray.push({ 'success': false, 'message': "Invalid command format." });
         }
+    } else if (parts.length >= 3 && parts[1] === 'attr') {
+        //i attr type email
+        const id = parts[0];
+        let attr = parts[2];
+        let attrValue = parts[3];
+
+        if (elementExists(id)) {
+            const element = getElementById(id);
+            element.setAttribute(attr, attrValue);
+
+            console.log(`Set attribute '${attr}' of element with ID '${id}' to '${attrValue}'.`);
+            outputArray.push({ 'success': true, 'message': `Set attribute '${attr}' of element with ID '${id}' to '${attrValue}'.` });
+        }
+        else {
+            console.log(`Element with ID '${id}' does not exist.`);
+            outputArray.push({ 'success': false, 'message': `Element with ID '${id}' does not exist.` });
+        }
     }
-    // else if (parts.length > 2 && parts[1] === 'props') {
-    //     const id = parts[0];
-    //     let side = parts.slice(2).join(' ');
-
-    //     if (elementExists(id)) {
-    //         const props = side.split(",");
-
-    //         props.forEach(property => {
-    //             parseS(`${id} ${property.trim()}`);
-    //         });
-    //     }
-    //     else {
-    //         console.log(`Element with ID '${id}' does not exist.`);
-    //         outputArray.push({ 'success': false, 'message': `Element with ID '${id}' does not exist.` });
-    //     }
-    // }
     else {
-        console.log(`Invalid command syntax: ${command}`);
-        outputArray.push({ 'success': false, 'message': `Invalid command syntax: ${command}` });
+        if (!command.trim().startsWith('#')) {
+            console.log(`Invalid command syntax: ${command}`);
+            outputArray.push({ 'success': false, 'message': `Invalid command syntax: ${command}` });
+        }
     }
 }
 

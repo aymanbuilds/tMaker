@@ -62,6 +62,9 @@ let colorMap = {
     'outline-width': propertiesColor,
     'outline-style': propertiesColor,
     'outline-color': propertiesColor,
+
+    // 'datetime-local': propertiesColor,
+    
     'place-content': propertiesColor,
     'align-content': propertiesColor,
     'word-spacing': propertiesColor,
@@ -141,6 +144,10 @@ let colorMap = {
     'acontent': propertiesColor,
     'maxwidth': propertiesColor,
     'minwidth': propertiesColor,
+
+    // 'password': propertiesColor,
+    // 'checkbox': propertiesColor,
+
     'address': keywordsColor,
     'article': keywordsColor,
     'caption': keywordsColor,
@@ -179,6 +186,12 @@ let colorMap = {
     'fshrink': propertiesColor,
     'gtareas': propertiesColor,
     'gcolumn': propertiesColor,
+
+    // 'submit': propertiesColor,
+    // 'button': propertiesColor,
+    // 'search': propertiesColor,
+    // 'hidden': propertiesColor,
+
     'parent': keywordsColor,
     'remove': keywordsColor,
     'center': keywordsColor,
@@ -225,6 +238,15 @@ let colorMap = {
     'gtrows': propertiesColor,
     'garows': propertiesColor,
     'pitems': propertiesColor,
+
+    // 'radio': propertiesColor,
+    // 'image': propertiesColor,
+    // 'reset': propertiesColor,
+    // 'color': propertiesColor,
+    // 'email': propertiesColor,
+    // 'month': propertiesColor,
+    // 'range': propertiesColor,
+
     'image': keywordsColor,
     'input': keywordsColor,
     'style': keywordsColor,
@@ -260,6 +282,16 @@ let colorMap = {
     'pself': propertiesColor,
     'aself': propertiesColor,
     'jself': propertiesColor,
+
+    // 'date': propertiesColor,
+    // 'week': propertiesColor,
+    // 'time': propertiesColor,
+    // 'text': propertiesColor,
+    // 'file': propertiesColor,
+    'type': propertiesColor,
+
+    'attr': keywordsColor,
+
     'exec': keywordsColor,
     'grid': propertiesColor,
     'abbr': keywordsColor,
@@ -289,6 +321,10 @@ let colorMap = {
     'grow': propertiesColor,
     'cols': propertiesColor,
     'href': propertiesColor,
+
+    // 'url': propertiesColor,
+    // 'tel': propertiesColor,
+
     'add': keywordsColor,
     'row': keywordsColor,
     'img': keywordsColor,
@@ -386,7 +422,7 @@ let colorMap = {
 // }
 
 function applyColors(text) {
-    const lineCommentRe = /^\s*#.*$/gm; 
+    const lineCommentRe = /^\s*#.*$/gm;
     const wordRe = new RegExp("\\b(" + Object.keys(colorMap).join("|") + ")\\b", "gi");
 
     const lines = text.split('\n');

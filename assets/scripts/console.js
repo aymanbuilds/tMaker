@@ -16,6 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // const inputTypes = [
+    //     'text', 'password', 'email', 'number', 'tel', 'url',
+    //     'search', 'color', 'date', 'datetime-local', 'month', 'week',
+    //     'time', 'checkbox', 'radio', 'file', 'range', 'hidden', 'image',
+    //     'submit', 'reset', 'button'
+    // ];
+
     const suggestions = [
         "exec", "center", "column", "row", "grid", "ul", "li", "container",
         "button", "image", "img", "input", "textarea", "a", "style",
@@ -83,7 +90,12 @@ document.addEventListener('DOMContentLoaded', () => {
         'wreverse', 'wrap-reverse', 'nrepeat', 'no-repeat', 'rx', 'repeat-x',
         'ry', 'repeat-y', 'ttop', 'text-top', 'tbottom', 'text-bottom',
         'max-width', 'maxwidth', 'minwidth', 'min-width',
-        'max-height', 'maxheight', 'minheight', 'min-height', "props"];
+        'max-height', 'maxheight', 'minheight', 'min-height', "props",
+
+        'text', 'password', 'email', 'number', 'tel', 'url',
+        'search', 'color', 'date', 'datetime-local', 'month', 'week',
+        'time', 'checkbox', 'radio', 'file', 'range', 'hidden', 'image',
+        'submit', 'reset', 'button'];
 
     suggestions.sort();
 
