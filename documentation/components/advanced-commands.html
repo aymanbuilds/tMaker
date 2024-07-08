@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - Basic Commands</title>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../assets/styles/main.css">
+    <link rel="stylesheet" href="../assets/styles/queries.css">
+</head>
+
+<body>
+    <!-- Main Header -->
+    <header class="main">
+        <!-- Mobile Menu Icon -->
+        <img id="mobile-menu" onclick="openSidebar()" src="../../assets/icons/menu.png" alt="Menu">
+
+        <!-- Title Container -->
+        <div id="header-title-container" class="row aitems-center gap10">
+            <div class="title">Template Maker</div>
+            <div class="description">Docs</div>
+        </div>
+
+        <!-- Searchbar -->
+        <div class="search-bar">
+            <input id="search-input" type="text" placeholder="Search for something...">
+            <img src="../assets/icons/search.png" alt="Search">
+
+            <!-- Suggestions Box -->
+            <div class="suggestions">
+                <div class="item unclickable">No results</div>
+            </div>
+        </div>
+
+        <!-- Language Container -->
+        <div>
+            <button onclick="showPopup('language');" class="row aitems-center gap10 clickable">
+                <img id="language-icon" class="icon" src="../assets/icons/english.png" alt="Language">
+                <span id="language-label" class="label">English</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main>
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Mobile Close Sidebar -->
+            <div onclick="hideSidebar()" class="close">
+                <img src="../assets/icons/close.png" alt="Close">
+            </div>
+
+            <nav>
+                <ul>
+                    <li class="english">Home</li>
+                    <li class="french">Accueil</li>
+                    <ul>
+                        <li class="english"><a href="../index.html">Getting Started</a></li>
+                        <li class="french"><a href="../index.html">Commencer</a></li>
+                    </ul>
+                    <li class="english">Usage</li>
+                    <li class="french">Utilisation</li>
+                    <ul>
+                        <li class="english"><a href="basic-commands.html">Basic Commands</a></li>
+                        <li class="french"><a href="basic-commands.html" >Commandes de base</a></li>
+                        <li class="english"><a href="advanced-commands.html" class="active">Advanced Commands</a></li>
+                        <li class="french"><a href="advanced-commands.html" class="active">Commandes avancées</a></li>
+                        <li class="english"><a href="examples.html">Examples</a></li>
+                        <li class="french"><a href="examples.html">Exemples</a></li>
+                    </ul>
+                    <li class="english">Components</li>
+                    <li class="french">Composants</li>
+                    <ul>
+                        <li class="english"><a href="creating-components.html">Creating Components</a></li>
+                        <li class="french"><a href="creating-components.html">Créer des composants</a></li>
+                        <li class="english"><a href="using-components.html">Using Components</a></li>
+                        <li class="french"><a href="using-components.html">Utiliser des composants</a></li>
+                        <li class="english"><a href="component-examples.html">Component Examples</a></li>
+                        <li class="french"><a href="component-examples.html">Exemples de composants</a></li>
+                    </ul>
+                    <li class="english">Styles</li>
+                    <li class="french">Styles</li>
+                    <ul>
+                        <li class="english"><a href="applying-styles.html">Applying Styles</a></li>
+                        <li class="french"><a href="applying-styles.html">Appliquer des styles</a></li>
+                        <li class="english"><a href="responsive-design.html">Responsive Design</a></li>
+                        <li class="french"><a href="responsive-design.html">Design réactif</a></li>
+                        <li class="english"><a href="style-examples.html">Style Examples</a></li>
+                        <li class="french"><a href="style-examples.html">Exemples de style</a></li>
+                    </ul>
+                    <li class="english">Tutorials</li>
+                    <li class="french">Tutoriels</li>
+                    <ul>
+                        <li class="english"><a href="tutorials.html">Tutorials</a></li>
+                        <li class="french"><a href="tutorials.html">Tutoriels</a></li>
+                    </ul>
+                    <li class="english">FAQ</li>
+                    <li class="french">FAQ</li>
+                    <ul>
+                        <li class="english"><a href="common-questions.html">Common Questions</a></li>
+                        <li class="french"><a href="common-questions.html">Questions fréquentes</a></li>
+                    </ul>
+                    <li class="english">Changelog</li>
+                    <li class="french">Journal des modifications</li>
+                    <ul>
+                        <li class="english"><a href="version-history.html">Version History</a></li>
+                        <li class="french"><a href="version-history.html">Historique des versions</a></li>
+                        <li class="english"><a href="updates.html">Updates &amp; New Features</a></li>
+                        <li class="french"><a href="updates.html">Mises à jour &amp; nouvelles
+                                fonctionnalités</a></li>
+                    </ul>
+                    <li class="english">About</li>
+                    <li class="french">À propos</li>
+                    <ul>
+                        <li class="english"><a href="about-tmaker.html">About tMaker</a></li>
+                        <li class="french"><a href="about-tmaker.html">À propos de tMaker</a></li>
+                        <li class="english"><a href="about-developer.html">About the Developer</a></li>
+                        <li class="french"><a href="about-developer.html">À propos du développeur</a></li>
+                    </ul>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Inner Container -->
+            <div class="inner">
+                <!-- Header Container -->
+                <header class="row aitems-center jcontent-center gap40">
+                    <!-- Display Container -->
+                    <div class="display-content">
+                        <img src="../assets/images/documentation.png" alt="Documentation">
+                    </div>
+
+                    <!-- Text Container -->
+                    <div class="text-content column gap10">
+                        <h2 class="english">Advanced Commands</h2>
+                        <h2 class="french">Commandes avancées</h2>
+                        <p class="english"></p>
+                        <p class="french"></p>
+                    </div>
+                </header>
+
+                <!-- Content Container -->
+                <div class="informative column gap80">
+                    <!-- Syntax Section -->
+                    <section class="block column gap10">
+                        <h3 class="english">Basic Syntax</h3>
+                        <h3 class="french">Syntaxe de Base</h3>
+
+                        <!-- Assigning Parent to an Element -->
+                        <p class="english" style="margin-top: 20px;">
+                            To assign a <strong>parent</strong> to an <strong>element</strong>, use the <strong>keywords
+                                "parent of"</strong>. You need to specify the <strong>parent variable name</strong> at
+                            the beginning of the code and the <strong>child variable name</strong> at the end.
+                        </p>
+                        <p class="french" style="margin-top: 20px;">
+                            Pour assigner un <strong>parent</strong> à un <strong>élément</strong>, utilisez les
+                            <strong>mots-clés "parent de"</strong>. Vous devez spécifier le <strong>nom </strong> de la
+                            <strong> variable
+                                parent</strong> au début du code et le <strong>nom</strong> de la <strong>variable
+                                enfant</strong> à la
+                            fin.
+                        </p>
+
+                        <div class="console">
+                            <p class="english">
+                                <code><span class="comment"># _parent_variable_name parent of _child_variable_name</code>
+                                <code><span class="comment"># For example:</span></code>
+                                <code><span class="text">mainWrapper</span> <span class="keyword">parent of</span> <span class="text">mainHeader</span></code>
+                            </p>
+                            <p class="french">
+                                <code><span class="comment"># _parent_variable_name parent of _child_variable_name</code>
+                                <code><span class="comment"># Par exemple:</span></code>
+                                <code><span class="text">mainWrapper</span> <span class="keyword">parent of</span> <span class="text">mainHeader</span></code>
+                            </p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Popups -->
+    <div id="popups">
+        <div id="language" class="popup">
+            <header>
+                <h2>Language</h2>
+                <img onclick="hidePopup('language');" src="../assets/icons/close.png" alt="Close">
+            </header>
+            <ul>
+                <li onclick="changeLanguage('english')">English</li>
+                <li onclick="changeLanguage('french')">Français</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Javascript -->
+    <script src="../assets/scripts/main.js"></script>
+</body>
+
+</html>

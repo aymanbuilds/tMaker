@@ -504,12 +504,12 @@ function parseSingleCommand(command, functionsArray) {
             } else if (property === 'value' || property === 'placeholder') {
                 if (element.tagName.toLowerCase() === 'input' || element.tagName.toLowerCase() === 'textarea') {
                     if (property === 'value') {
-                        element.value = sideOrValue;
+                        element.value = parts.slice(2).join(' ');
 
                         console.log(`Set value of input/textarea element with ID '${id}' to '${sideOrValue}'.`);
                         outputArray.push({ 'success': true, 'message': `Set value of input/textarea element with ID '${id}' to '${sideOrValue}'.` });
                     } else if (property === 'placeholder') {
-                        element.placeholder = sideOrValue;
+                        element.placeholder = parts.slice(2).join(' ');
 
                         console.log(`Set placeholder of input/textarea element with ID '${id}' to '${sideOrValue}'.`);
                         outputArray.push({ 'success': true, 'message': `Set placeholder of input/textarea element with ID '${id}' to '${sideOrValue}'.` });
