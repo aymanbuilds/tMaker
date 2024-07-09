@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - Examples</title>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../assets/styles/main.css">
+    <link rel="stylesheet" href="../assets/styles/queries.css">
+</head>
+
+<body>
+    <!-- Main Header -->
+    <header class="main">
+        <!-- Mobile Menu Icon -->
+        <img id="mobile-menu" onclick="openSidebar()" src="../assets/icons/menu.png" alt="Menu">
+
+        <!-- Title Container -->
+        <div id="header-title-container" class="row aitems-center gap10">
+            <div class="title">Template Maker</div>
+            <div class="description">Docs</div>
+        </div>
+
+        <!-- Searchbar -->
+        <div class="search-bar">
+            <input id="search-input" type="text" placeholder="Search for something...">
+            <img src="../assets/icons/search.png" alt="Search">
+
+            <!-- Suggestions Box -->
+            <div class="suggestions">
+                <div class="item unclickable">No results</div>
+            </div>
+        </div>
+
+        <!-- Language Container -->
+        <div>
+            <button onclick="showPopup('language');" class="row aitems-center gap10 clickable">
+                <img id="language-icon" class="icon" src="../assets/icons/english.png" alt="Language">
+                <span id="language-label" class="label">English</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main>
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Mobile Close Sidebar -->
+            <div onclick="hideSidebar()" class="close">
+                <img src="../assets/icons/close.png" alt="Close">
+            </div>
+
+            <nav>
+                <ul>
+                    <li class="english">Home</li>
+                    <li class="french">Accueil</li>
+                    <ul>
+                        <li class="english"><a href="../index.html">Getting Started</a></li>
+                        <li class="french"><a href="../index.html">Commencer</a></li>
+                    </ul>
+                    <li class="english">Usage</li>
+                    <li class="french">Utilisation</li>
+                    <ul>
+                        <li class="english"><a href="basic-commands.html">Basic Commands</a></li>
+                        <li class="french"><a href="basic-commands.html">Commandes de base</a></li>
+                        <li class="english"><a href="advanced-commands.html">Advanced Commands</a></li>
+                        <li class="french"><a href="advanced-commands.html">Commandes avancées</a></li>
+                        <li class="english"><a href="examples.html" class="active">Examples</a></li>
+                        <li class="french"><a href="examples.html" class="active">Exemples</a></li>
+                    </ul>
+                    <li class="english">Components</li>
+                    <li class="french">Composants</li>
+                    <ul>
+                        <li class="english"><a href="creating-components.html">Creating Components</a></li>
+                        <li class="french"><a href="creating-components.html">Créer des composants</a></li>
+                        <li class="english"><a href="using-components.html">Using Components</a></li>
+                        <li class="french"><a href="using-components.html">Utiliser des composants</a></li>
+                        <li class="english"><a href="component-examples.html">Component Examples</a></li>
+                        <li class="french"><a href="component-examples.html">Exemples de composants</a></li>
+                    </ul>
+                    <li class="english">Styles</li>
+                    <li class="french">Styles</li>
+                    <ul>
+                        <li class="english"><a href="applying-styles.html">Applying Styles</a></li>
+                        <li class="french"><a href="applying-styles.html">Appliquer des styles</a></li>
+                        <li class="english"><a href="responsive-design.html">Responsive Design</a></li>
+                        <li class="french"><a href="responsive-design.html">Design réactif</a></li>
+                        <li class="english"><a href="style-examples.html">Style Examples</a></li>
+                        <li class="french"><a href="style-examples.html">Exemples de style</a></li>
+                    </ul>
+                    <li class="english">Tutorials</li>
+                    <li class="french">Tutoriels</li>
+                    <ul>
+                        <li class="english"><a href="tutorials.html">Tutorials</a></li>
+                        <li class="french"><a href="tutorials.html">Tutoriels</a></li>
+                    </ul>
+                    <li class="english">FAQ</li>
+                    <li class="french">FAQ</li>
+                    <ul>
+                        <li class="english"><a href="common-questions.html">Common Questions</a></li>
+                        <li class="french"><a href="common-questions.html">Questions fréquentes</a></li>
+                    </ul>
+                    <li class="english">Changelog</li>
+                    <li class="french">Journal des modifications</li>
+                    <ul>
+                        <li class="english"><a href="version-history.html">Version History</a></li>
+                        <li class="french"><a href="version-history.html">Historique des versions</a></li>
+                        <li class="english"><a href="updates.html">Updates &amp; New Features</a></li>
+                        <li class="french"><a href="updates.html">Mises à jour &amp; nouvelles
+                                fonctionnalités</a></li>
+                    </ul>
+                    <li class="english">About</li>
+                    <li class="french">À propos</li>
+                    <ul>
+                        <li class="english"><a href="about-tmaker.html">About tMaker</a></li>
+                        <li class="french"><a href="about-tmaker.html">À propos de tMaker</a></li>
+                        <li class="english"><a href="about-developer.html">About the Developer</a></li>
+                        <li class="french"><a href="about-developer.html">À propos du développeur</a></li>
+                    </ul>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Inner Container -->
+            <div class="inner">
+                <!-- Header Container -->
+                <header class="row aitems-center jcontent-center gap40">
+                    <!-- Display Container -->
+                    <div class="display-content">
+                        <img src="../assets/images/documentation.png" alt="Documentation">
+                    </div>
+
+                    <!-- Text Container -->
+                    <div class="text-content column gap10">
+                        <h2 class="english">Examples</h2>
+                        <h2 class="french">Exemples</h2>
+                        <p class="english">
+                            Here are examples combining basic and advanced commands to demonstrate the simplicity of
+                            tMaker and help you get started.
+                        </p>
+                        <p class="french">
+                            Voici des exemples combinant des commandes de base et avancées pour démontrer la simplicité
+                            de tMaker et vous aider à commencer.
+                        </p>
+                    </div>
+                </header>
+
+                <!-- Content Container -->
+                <div class="informative column gap80">
+                    <!-- Example Section -->
+                    <section class="block column gap10">
+                        <h3 class="english">Centered Hello World</h3>
+                        <h3 class="french">Hello World centré</h3>
+
+                        <!-- Assigning Values to Element's Properties -->
+                        <p class="english">
+                            An example demonstrating how to write <strong>Hello World</strong> in a <strong>center
+                                container</strong>:
+                        </p>
+                        <p class="french">
+                            Un exemple montrant comment écrire <strong>Hello World</strong> dans un <strong>conteneur
+                                centré</strong> :
+                        </p>
+
+                        <div class="console">
+                            <p class="english">
+                                <code><span class="comment"># Adding Center Container</code>
+                                <code><span class="keyword">add</span> <span class="type">center</span> <span class="variable">centerContainer</span></code>
+                                <code><span class="text">centerContainer</span> <span class="keyword">props</span> [<span class="property">background</span> royalblue, <span class="property">color</span> white, <span class="property">height</span> 100%]</code>
+                                <br>
+                                <code><span class="comment"># Adding H1 Element</code>
+                                <code><span class="keyword">add</span> <span class="type">h1</span> <span class="variable">helloWorldText</span></code>
+                                <code><span class="text">helloWorldText</span> <span class="property">text</span> <span class="text">Hello World</span></code>
+                                <br>
+                                <code><span class="comment"># Assigning Parent to the H1 Element</code>
+                                <code><span class="text">centerContainer</span> <span class="keyword">parent of</span> <span class="text">helloWorldText</span></code>
+                            </p>
+                            <p class="french">
+                                <code><span class="comment"># Ajout d'un conteneur central</code>
+                                <code><span class="keyword">add</span> <span class="type">center</span> <span class="variable">centerContainer</span></code>
+                                <code><span class="text">centerContainer</span> <span class="keyword">props</span> [<span class="property">background</span> royalblue, <span class="property">color</span> white, <span class="property">height</span> 100%]</code>
+                                <br>
+                                <code><span class="comment"># Ajout d'un élément H1</code>
+                                <code><span class="keyword">add</span> <span class="type">h1</span> <span class="variable">helloWorldText</span></code>
+                                <code><span class="text">helloWorldText</span> <span class="property">text</span> <span class="text">Hello World</span></code>
+                                <br>
+                                <code><span class="comment"># Affectation d'un parent à l'élément H1</code>
+                                <code><span class="text">centerContainer</span> <span class="keyword">parent of</span> <span class="text">helloWorldText</span></code>
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Example Section -->
+                    <section class="block column gap10">
+                        <h3 class="english">Row Container</h3>
+                        <h3 class="french">Conteneur Row</h3>
+
+                        <!-- Assigning Values to Element's Properties -->
+                        <p class="english">
+                            A simple <strong>flexbox</strong> containing an <strong>image</strong> and a
+                            <strong>button</strong>, where the <strong>container</strong> has <strong>space
+                                between</strong> the elements:
+                        </p>
+                        <p class="french">
+                            Un simple <strong>flexbox</strong> contenant une <strong>image</strong> et un
+                            <strong>bouton</strong>, où le <strong>conteneur</strong> a un <strong>espacement
+                                entre</strong> les éléments :
+                        </p>
+
+                        <div class="console">
+                            <p class="english">
+                                <code><span class="comment"># Adding Row Container</code>
+                                <code><span class="keyword">add</span> <span class="type">row</span> <span class="variable">rowContainer</span></code>
+                                <code><span class="text">rowContainer</span> <span class="keyword">aitems</span> <span class="text">center</span></code>
+                                <code><span class="text">rowContainer</span> <span class="keyword">jcontent</span> <span class="text">sbetween</span></code>
+                                <code><span class="text">rowContainer</span> <span class="keyword">padding</span> <span class="text">40px 80px</span></code>
+                                <code><span class="text">rowContainer</span> <span class="keyword">border bottom</span> <span class="text">1px solid #999</span></code>
+                                <br>
+                                <code><span class="comment"># Adding Image </code>
+                                <code><span class="keyword">add</span> <span class="type">image</span> <span class="variable">logo</span></code>
+                                <code><span class="text">logo</span> <span class="keyword">props</span> [<span class="property">src</span> https://cdn-icons-png.flaticon.com/64/2115/2115955.png, <span class="property">width</span> 48px, <span class="property">height</span> 48px]</code>
+                                <br>
+                                <code><span class="comment"># Assigning Parent to the Image</code>
+                                <code><span class="text">rowContainer</span> <span class="keyword">parent of</span> <span class="text">logo</span></code>
+                                <br>
+                                <code><span class="comment"># Adding Button </code>
+                                <code><span class="keyword">add</span> <span class="type">button</span> <span class="variable">btn</span></code>
+                                <code><span class="text">btn</span> <span class="keyword">props</span> [<span class="property">padding</span> 10px 20px, <span class="property">text</span> Flexbox Example, <span class="property">border</span> none, <span class="property">background</span> #ddd, <span class="property">bradius</span> 30px, <span class="property">cursor</span> pointer]</code>
+                                <br>
+                                <code><span class="comment"># Assigning Parent to the Button</code>
+                                <code><span class="text">rowContainer</span> <span class="keyword">parent of</span> <span class="text">btn</span></code>
+                            </p>
+                            <p class="french">
+                                <code><span class="comment"># Ajout d'un conteneur de lignes</code>
+                                <code><span class="keyword">add</span> <span class="type">row</span> <span class="variable">rowContainer</span></code>
+                                <code><span class="text">rowContainer</span> <span class="keyword">aitems</span> <span class="text">center</span></code>
+                                <code><span class="text">rowContainer</span> <span class="keyword">jcontent</span> <span class="text">sbetween</span></code>
+                                <code><span class="text">rowContainer</span> <span class="keyword">padding</span> <span class="text">40px 80px</span></code>
+                                <code><span class="text">rowContainer</span> <span class="keyword">border bottom</span> <span class="text">1px solid #999</span></code>
+                                <br>
+                                <code><span class="comment"># Ajout d'une image </code>
+                                <code><span class="keyword">add</span> <span class="type">image</span> <span class="variable">logo</span></code>
+                                <code><span class="text">logo</span> <span class="keyword">props</span> [<span class="property">src</span> https://cdn-icons-png.flaticon.com/64/2115/2115955.png, <span class="property">width</span> 48px, <span class="property">height</span> 48px]</code>
+                                <br>
+                                <code><span class="comment"># Affectation d'un parent à l'image</code>
+                                <code><span class="text">rowContainer</span> <span class="keyword">parent of</span> <span class="text">logo</span></code>
+                                <br>
+                                <code><span class="comment"># Ajout d'un bouton </code>
+                                <code><span class="keyword">add</span> <span class="type">button</span> <span class="variable">btn</span></code>
+                                <code><span class="text">btn</span> <span class="keyword">props</span> [<span class="property">padding</span> 10px 20px, <span class="property">text</span> Flexbox Example, <span class="property">border</span> none, <span class="property">background</span> #ddd, <span class="property">bradius</span> 30px, <span class="property">cursor</span> pointer]</code>
+                                <br>
+                                <code><span class="comment"># Affectation d'un parent au bouton</code>
+                                <code><span class="text">rowContainer</span> <span class="keyword">parent of</span> <span class="text">btn</span></code>
+                            </p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Popups -->
+    <div id="popups">
+        <div id="language" class="popup">
+            <header>
+                <h2>Language</h2>
+                <img onclick="hidePopup('language');" src="../assets/icons/close.png" alt="Close">
+            </header>
+            <ul>
+                <li onclick="changeLanguage('english')">English</li>
+                <li onclick="changeLanguage('french')">Français</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Javascript -->
+    <script src="../assets/scripts/main.js"></script>
+</body>
+
+</html>
