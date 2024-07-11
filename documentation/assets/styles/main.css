@@ -423,6 +423,7 @@ p {
     border-radius: 5px;
     font-family: 'Courier New', Courier, monospace;
     line-height: 1.5;
+    word-break: break-all;
 }
 
 .console code {

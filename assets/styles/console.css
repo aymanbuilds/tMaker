@@ -3,6 +3,8 @@
     align-items: center;
     flex-wrap: wrap;
     height: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
 .code-editor-container-tabs .tab {
@@ -35,7 +37,7 @@
 
 .line-numbers {
     display: inline-block;
-    text-align: right;
+    /* text-align: right; */
     margin-right: 20px;
     user-select: none;
     color: #999;
@@ -43,11 +45,12 @@
     letter-spacing: 1px;
     line-height: 1.6;
     min-height: 100%;
+    text-align: left;
 }
 
 .code-editor {
     width: 100%;
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: hidden;
     min-height: 12rem;
     left: 40px;
@@ -61,10 +64,13 @@
     resize: none;
     z-index: 2;
     caret-color: #555555;
-    width: 95%;
+    /* width: 95%; */
     background-color: transparent;
     color: transparent;
     position: absolute;
+    cursor: auto;
+    resize: none;
+
 }
 
 .line-numbers-wrapper.active {
@@ -92,15 +98,21 @@
 .backdrop {
     position: absolute;
     width: 100%;
+
+    width: auto;
+    /* resize: horizontal; */
+
     left: 40px;
     z-index: 1;
     border: 2px solid transparent;
     overflow: hidden;
-    width: 95%;
+    /* width: 95%; */
     pointer-events: none;
 }
 
 .custom-area {
+    width: 100%;
+    /* resize: horizontal; */
     white-space: pre;
     word-wrap: break-word;
     overflow: hidden;

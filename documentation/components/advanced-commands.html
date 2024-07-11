@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentation - Basic Commands</title>
+    <title>Documentation - Advanced Commands</title>
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="../assets/styles/main.css">
@@ -64,7 +64,7 @@
                     <li class="french">Utilisation</li>
                     <ul>
                         <li class="english"><a href="basic-commands.html">Basic Commands</a></li>
-                        <li class="french"><a href="basic-commands.html" >Commandes de base</a></li>
+                        <li class="french"><a href="basic-commands.html">Commandes de base</a></li>
                         <li class="english"><a href="advanced-commands.html" class="active">Advanced Commands</a></li>
                         <li class="french"><a href="advanced-commands.html" class="active">Commandes avancées</a></li>
                         <li class="english"><a href="examples.html">Examples</a></li>
@@ -138,8 +138,16 @@
                     <div class="text-content column gap10">
                         <h2 class="english">Advanced Commands</h2>
                         <h2 class="french">Commandes avancées</h2>
-                        <p class="english"></p>
-                        <p class="french"></p>
+                        <p class="english">
+                            Even the advanced commands in tMaker are designed to be easy and understandable. There is no
+                            complexity at all, making it simple for you to create sophisticated web templates
+                            effortlessly.
+                        </p>
+                        <p class="french">
+                            Même les commandes avancées de tMaker sont conçues pour être faciles et compréhensibles. Il
+                            n'y a aucune complexité, ce qui vous permet de créer des modèles de site web sophistiqués
+                            sans effort.
+                        </p>
                     </div>
                 </header>
 
@@ -147,34 +155,65 @@
                 <div class="informative column gap80">
                     <!-- Syntax Section -->
                     <section class="block column gap10">
-                        <h3 class="english">Basic Syntax</h3>
-                        <h3 class="french">Syntaxe de Base</h3>
+                        <h3 class="english">Elements Properties</h3>
+                        <h3 class="french">Propriétés des Éléments</h3>
 
-                        <!-- Assigning Parent to an Element -->
-                        <p class="english" style="margin-top: 20px;">
-                            To assign a <strong>parent</strong> to an <strong>element</strong>, use the <strong>keywords
-                                "parent of"</strong>. You need to specify the <strong>parent variable name</strong> at
-                            the beginning of the code and the <strong>child variable name</strong> at the end.
+                        <!-- Assigning Values to Element's Properties -->
+                        <p class="english">
+                            Another advanced method to assign <strong>single</strong> or <strong>multiple</strong>
+                            properties to an <strong>element</strong> is by adding <strong>properties</strong> in an
+                            <strong>array</strong> format using the <strong>props keyword</strong>:
                         </p>
-                        <p class="french" style="margin-top: 20px;">
-                            Pour assigner un <strong>parent</strong> à un <strong>élément</strong>, utilisez les
-                            <strong>mots-clés "parent de"</strong>. Vous devez spécifier le <strong>nom </strong> de la
-                            <strong> variable
-                                parent</strong> au début du code et le <strong>nom</strong> de la <strong>variable
-                                enfant</strong> à la
-                            fin.
+                        <p class="french">
+                            Une autre méthode avancée pour attribuer des <strong>propriétés</strong>
+                            <strong>simples</strong> ou <strong>multiples</strong> à un <strong>élément</strong>
+                            consiste à ajouter des <strong>propriétés</strong> sous forme de <strong>tableau</strong> en
+                            utilisant le <strong>mot-clé props</strong> :
                         </p>
 
                         <div class="console">
                             <p class="english">
-                                <code><span class="comment"># _parent_variable_name parent of _child_variable_name</code>
+                                <code><span class="comment"># _variable_name props [_prop1 _value, _prop2 _value]</code>
                                 <code><span class="comment"># For example:</span></code>
-                                <code><span class="text">mainWrapper</span> <span class="keyword">parent of</span> <span class="text">mainHeader</span></code>
+                                <code><span class="keyword">add</span> <span class="type">button</span> <span class="variable">btn</span></code>
+                                <code><span class="text">btn</span> <span class="keyword">props</span> [<span class="property">text </span> Button1, <span class="property">padding </span>10px 20px]</code>
                             </p>
                             <p class="french">
-                                <code><span class="comment"># _parent_variable_name parent of _child_variable_name</code>
+                                <code><span class="comment"># _variable_name props [_prop1 _value, _prop2 _value]</code>
                                 <code><span class="comment"># Par exemple:</span></code>
-                                <code><span class="text">mainWrapper</span> <span class="keyword">parent of</span> <span class="text">mainHeader</span></code>
+                                <code><span class="keyword">add</span> <span class="type">button</span> <span class="variable">btn</span></code>
+                                <code><span class="text">btn</span> <span class="keyword">props</span> [<span class="property">text </span> Button1, <span class="property">padding </span>10px 20px]</code>
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Syntax Section -->
+                    <section class="block column gap10">
+                        <h3 class="english">Elements Attributes</h3>
+                        <h3 class="french">Attributs des Éléments</h3>
+
+                        <!-- Assigning Values to Element's Attributes -->
+                        <p class="english">
+                            To assign a <strong>value</strong> to an <strong>element's attribute</strong>, you can use
+                            the <strong>attr keyword</strong>:
+                        </p>
+                        <p class="french">
+                            Pour attribuer une <strong>valeur</strong> à un <strong>attribut d'un élément</strong>, vous
+                            pouvez utiliser le <strong>mot-clé attr</strong> :
+                        </p>
+
+                        <div class="console">
+                            <p class="english">
+                                <code><span class="comment"># _variable_name attr _attr_name  _value</code>
+                                <code><span class="comment"># For example:</span></code>
+                                <code><span class="keyword">add</span> <span class="type">input</span> <span class="variable">numberInput</span></code>
+                                <code><span class="text">numberInput</span> <span class="keyword">attr</span> <span class="property">type</span> <span class="text">number</span></code>
+                            </p>
+                            <p class="french">
+                                <code><span class="comment"># _variable_name attr _attr_name  _value</code>
+                                <code><span class="comment"># Par exemple:</span></code>
+                                <code><span class="keyword">add</span> <span class="type">input</span> <span class="variable">numberInput</span></code>
+                                <code><span class="text">numberInput</span> <span class="keyword">attr</span> <span class="property">type</span> <span class="text">number</span></code>
                             </p>
                         </div>
                     </section>

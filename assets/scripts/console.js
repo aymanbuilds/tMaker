@@ -14,6 +14,21 @@ document.addEventListener('DOMContentLoaded', () => {
             customArea.scrollTop = textArea.scrollTop;
             customArea.scrollLeft = textArea.scrollLeft;
         });
+
+        // Function to synchronize widths
+        function synchronizeWidths() {
+            const backdropWidth = parseFloat(getComputedStyle(backdrop).width);
+            const consoleWidth = parseFloat(getComputedStyle(document.querySelector('.console')).width);
+        
+            if (backdropWidth >= consoleWidth) {
+                customArea.style.width = backdropWidth + 'px';
+                textArea.style.width = backdropWidth + 'px';
+            }
+        }        
+
+        // Call synchronizeWidths initially and set up timer
+        synchronizeWidths();
+        const timerInterval = setInterval(synchronizeWidths, 1000);
     });
 
     // const inputTypes = [
@@ -225,22 +240,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const textBeforeCursor = textarea.value.substring(0, cursorPosition);
             const match = textBeforeCursor.match(/(\S+)$/);
             const query = match ? match[0] : '';
-        
+
             const filteredSuggestions = suggestions.filter(item => item.startsWith(query));
-        
+
             // Adjust for horizontal scroll
             const scrollLeft = textarea.scrollLeft;
-        
+
             suggestionsBox.style.top = `${top + height}px`;
             suggestionsBox.style.left = `${left - scrollLeft}px`;
             suggestionsBox.style.display = 'block';
-        
+            suggestionsBox.scrollTop = 0;
+
             suggestionsBox.innerHTML = filteredSuggestions.length
                 ? filteredSuggestions.map(item => `<div class="suggestion-item">${item}</div>`).join('')
                 : '<div class="no-suggestions">No suggestions</div>';
-        
+
             activeTextarea = textarea; // Set active textarea for suggestion handling
-        }        
+        }
     });
 
     // Hide suggestions box when clicking outside of it or the textareas

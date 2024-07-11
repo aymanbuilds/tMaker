@@ -100,6 +100,10 @@ function compile(preview) {
 
     let functionsArray = [];
     let functionsInputValue = document.getElementById('functionsInput').value;
+    functionsInputValue = functionsInputValue.split('\n').filter(line => !line.trim().startsWith('#')).join('\n');
+
+
+
     let functionBlocks = functionsInputValue.trim().split(/}\s*/);
 
     functionBlocks.forEach(block => {
@@ -164,12 +168,11 @@ function compile(preview) {
         }
     });
 
-    //console.log(functionsArray);
-
     elementsArray = [];
     outputArray = [];
 
     let styles = document.getElementById('stylesInput').value;
+    styles = styles.split('\n').filter(line => !line.trim().startsWith('#')).join('\n');
     // styles = styles.replace(/(\w+)\s+props\s*\(([^)]+)\)/g, (match, firstWord, properties) => {
     //     return properties.split(',').map(prop => `${firstWord} ${prop.trim()}`).join('\n');
     // });
@@ -182,9 +185,9 @@ function compile(preview) {
     });
 
     let commands = document.getElementById('in').value;
+    commands = commands.split('\n').filter(line => !line.trim().startsWith('#')).join('\n');
     commands = parseProps(commands);
     const lines = commands.trim().split('\n');
-
     lines.forEach(line => {
         if (line !== '')
             parseSingleCommand(line, functionsArray);
@@ -199,12 +202,11 @@ function compile(preview) {
     }, 1000);
 }
 
-function execFunction(commands) {
-    console.log(commands);
+function execFunction(commands,functionsArray) {
     const lines = commands.trim().split('\n');
     lines.forEach(line => {
         if (line !== '')
-            parseSingleCommand(line, null);
+            parseSingleCommand(line, functionsArray);
     });
 }
 
@@ -333,6 +335,10 @@ function formatCssPropertyAndValue(property, value) {
 
 // Function to parse a single command and create the HTML element or manage parent-child relationships
 function parseSingleCommand(command, functionsArray) {
+    if(command.trim().startsWith('#')){
+        return;
+    }
+
     command = command.replace(/\s+/g, ' ').trim();
     const parts = command.trim().split(' ');
 
@@ -707,10 +713,14 @@ function parseSingleCommand(command, functionsArray) {
             if (params.length > 0) {
                 let firstParam = params[0];
 
+                //console.log("functionsArray");
+                //console.log(functionsArray);
+
                 const func = functionsArray.find(func => func.name === functionName);
 
                 if (func) {
                     let bodyLines = func.body.replace(/%obj_placeholder(.*?)obj_placeholder%/g, firstParam);
+
                     //bodyLines = `add ${func.type} ${firstParam}_${func.parameters[0]}\n${bodyLines}`;
                     bodyLines = `add ${func.type} ${firstParam}\n${bodyLines}`;
 
@@ -739,13 +749,16 @@ function parseSingleCommand(command, functionsArray) {
                             if (words[0] === func.parameters[0])
                                 words[0] = `${firstParam}`;
                         }
+                        else if(words[0] == 'exec'){
+                            words[1] = words[1].replace(/\((.*?)\)/, (match, pr) => `(${firstParam}_${pr})`);
+                        }
 
                         lines[i] = words.join(" "); // Joining words back into a line
                     }
 
                     let modifiedBodyLines = lines.join("\n");
 
-                    execFunction(modifiedBodyLines);
+                    execFunction(modifiedBodyLines,functionsArray);
                 } else {
                     console.error(`Function ${functionName} not found.`);
                     outputArray.push({ 'success': false, 'message': `Function ${functionName} not found.` });
