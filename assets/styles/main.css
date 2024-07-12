@@ -1,0 +1,330 @@
+@font-face {
+    font-family: Rubik;
+    src: url(../fonts/rubik.ttf);
+}
+
+* {
+    font-family: Rubik;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    border: none;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    background-color: white;
+}
+
+body {
+    overflow: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.cover {
+    position: fixed;
+    z-index: 998;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.4s;
+}
+
+.console {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* padding: 40px; */
+    overflow-y: auto;
+    gap: 40px;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.console header{
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 40px;
+}
+
+section header p {
+    font-size: 1rem;
+    color: #777;
+    margin-top: 10px;
+    line-height: 1.4rem;
+}
+
+.window {
+    flex: 1;
+    gap: 40px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.toolsbox {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.toolbox-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #eee;
+    user-select: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.toolbox-card:hover {
+    background-color: #ddd;
+}
+
+.toolbox-card img {
+    width: 24px;
+}
+
+.toolbox-card span {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.codebox {
+    flex: 1;
+    width: 100%;
+    gap: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-left: 40px;
+}
+
+.sidebar {
+    width: 7rem;
+    height: 100%;
+    background-color: #f7f7f7;
+    position: relative;
+    transition: 0.4s;
+}
+
+.sidebar .inner {
+    overflow-y: auto;
+    height: 100%;
+    padding: 20px 10px;
+}
+
+.toggle-menu {
+    position: absolute;
+    z-index: 999;
+    left: -40px;
+    top: 20px;
+    width: 40px;
+    height: 50px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    background-color: #ddd;
+    display: none;
+    place-items: center;
+}
+
+.toggle-menu img {
+    width: 24px;
+}
+
+.toggle-menu img.flip {
+    transform: rotateY(180deg);
+}
+
+.sidebar-card {
+    width: 100%;
+    padding: 20px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 14px;
+    text-align: center;
+    user-select: none;
+    border-radius: 10px;
+    background-color: #eee;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.sidebar-card:last-child {
+    margin-bottom: 0;
+}
+
+.sidebar-card:hover {
+    background-color: #ddd;
+}
+
+.sidebar-card img {
+    width: 32px;
+}
+
+.sidebar-card div {
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.popups {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    visibility: hidden;
+    pointer-events: none;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.popups.visible {
+    visibility: visible;
+    pointer-events: all;
+    opacity: 1;
+}
+
+.popup {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: none;
+    flex-direction: column;
+}
+
+#loader {
+    border-radius: 50%;
+}
+
+#output {
+    width: 80%;
+    height: 90%;
+    padding: 40px;
+}
+
+#output .inner {
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.popup .inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.popup header{
+    text-align: left;
+    margin-bottom: 20px;
+    position: relative;
+    padding-right: 80px;
+}
+
+.popup head h2{
+    color: #333;
+}
+
+.popup header p{
+    font-size: 1rem;
+    color: #777;
+    margin-top: 10px;
+    line-height: 1.4rem;
+}
+
+.popup .list {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    padding-right: 20px;
+}
+
+.success {
+    background-color: #ccff96;
+    color: #333;
+}
+
+.error {
+    background-color: tomato;
+    color: white;
+}
+
+.output-message {
+    padding: 4px;
+    display: inline;
+}
+
+.popup header .close{
+    position: absolute;
+    right: 0;
+    top: 0;
+    user-select: none;
+    cursor: pointer;
+}
+
+#output .inner {
+    width: 100%;
+    height: 100%;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
