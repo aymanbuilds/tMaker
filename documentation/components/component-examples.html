@@ -167,84 +167,242 @@
 
                         <div class="console">
                             <p class="english">
-                                <code><span class="comment"># Creating Calculator Operators Buttons Component</code>
+                                <code><span class="comment"># Creating Calculator Operators Buttons Component</span></code>
                                 <code><span class="type">button</span> createCalcOpButton(btn)&lbrace;</code>
                                 <code>&emsp;<span class="text">btn</span> <span class="keyword">props</span> [<span class="property">width</span> 60px, <span class="property">height</span> 60px, <span class="property">bradius</span> 20px, <span class="property">outline</span> none, <span class="property">fsize</span> 1.2rem, bshadow rgba(0,0,0,0.2) -10px 10px 10px, <span class="property">color</span> white, <span class="property">background</span> royalblue, <span class="property">border</span> 1px solid #fff, <span class="property">cursor</span> pointer]</code>
                                 <code>&rbrace;</code>
                                 <br>
-                                <code><span class="comment"># Creating Calculator Numbers Buttons Component</code>
+                                <code><span class="comment"># Creating Calculator Numbers Buttons Component</span></code>
                                 <code><span class="type">button</span> createCalcNumButton(btn)&lbrace;</code>
-                                <code>&emsp;<span class="text">btn</span> <span class="keyword">props</span> [<span class="property">width</span> 60px, <span class="property">height</span> 60px, <span class="property">bradius</span> 20px, <span class="property">outline</span> none, <span class="property">fsize</span> 1.2rem, bshadow rgba(0,0,0,0.2) -10px 10px 10px, <span class="property">color</span> #333, <span class="property">white</span> royalblue, <span class="property">border</span> 1px solid #666, <span class="property">cursor</span> pointer]</code>
+                                <code>&emsp;<span class="text">btn</span> <span class="keyword">props</span> [<span class="property">width</span> 60px, <span class="property">height</span> 60px, <span class="property">bradius</span> 20px, <span class="property">outline</span> none, <span class="property">fsize</span> 1.2rem, bshadow rgba(0,0,0,0.2) -10px 10px 10px, <span class="property">color</span> #333, <span class="property">background</span> white, <span class="property">border</span> 1px solid #666, <span class="property">cursor</span> pointer]</code>
                                 <code>&rbrace;</code>
                                 <br>
+                                <code><span class="comment"># Creating Calculator Component</span></code>
+                                <code><span class="type">column</span> createCalculator(calc)&lbrace;</code>
+                                <code>&emsp;<span class="text">calc</span> <span class="keyword">props</span> [<span class="property">width</span> 350px, <span class="property">padding</span> 20px, <span class="property">background</span> white, <span class="property">bradius</span> 20px]</code>
+                                <br>
+                                <code>&emsp;<span class="comment"># Adding Result Input</span></code>
+                                <code>&emsp;<span class="keyword">add</span> <span class="type">input</span> textBox</code>
+                                <code>&emsp;<span class="text">textBox</span> <span class="keyword">props</span> [<span class="property">width</span> 100%, <span class="property">background</span> transparent, <span class="property">color</span> royalblue, <span class="property">value</span> 2122, <span class="property">border</span> none, <span class="property">outline</span> none, <span class="property">fsize</span> 3rem, <span class="property">talign</span> right, <span class="property">padding bottom</span> 10px, <span class="property">padding top</span> 40px]</code>
+                                <code>&emsp;textBox <span class="keyword">attr</span> <span clas="property">readonly</span> readonly</code>
+                                <br>
+                                <code>&emsp;<span class="comment"># Assigning parent to textBox</span></code>
+                                <code>&emsp;calc <span class="keyword">parent of</span> textBox</code>
+                                <br>
+                                <code>&emsp;<span class="comment"># Adding Equation Text</span></code>
+                                <code>&emsp;<span class="keyword">add</span> <span class="type">container</span> equationText</code>
+                                <code>&emsp;<span class="text">equationText</span> <span class="keyword">props</span> [<span class="property">width</span> 100%, <span class="property">talign</span> right, <span class="property">text</span> 346 + 74 * 24, <span class="property">fsize</span> 1.4rem, <span class="property">margin right</span> 20px, <span class="property">color</span> #555]</code>
+                                <br>
+                                <code>&emsp;<span class="comment"># Assigning parent to equationText</span></code>
+                                <code>&emsp;calc <span class="keyword">parent of</span> equationText</code>
+                                <br>
+                                <code>&emsp;<span class="comment"># Adding GridView</span></code>
+                                <code>&emsp;<span class="keyword">add</span> <span class="type">grid</span> gridView</code>
+                                <code>&emsp;<span class="text">gridView</span> <span class="keyword">props</span> [<span class="property">width</span> 100%, <span class="property">gtcolumns</span> repeat(4, 1fr), <span class="property">gap</span> 20px, <span class="property">margin top</span> 40px]</code>
+                                <br>
+                                <code>&emsp;<span class="comment"># Assigning parent to gridView</span></code>
+                                <code>&emsp;calc <span class="keyword">parent of</span> gridView</code>
+                                <br>
+                                <code>&emsp;<span class="comment"># Adding Calculator Buttons</span></code>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcOpButton(btnC)</code>
+                                <code>&emsp;btnC <span class="property">text</span> C</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnC</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcOpButton(btnPosNeg)</code>
+                                <code>&emsp;btnPosNeg <span class="property">text</span> + / -</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnPosNeg</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcOpButton(btnMod)</code>
+                                <code>&emsp;btnMod <span class="property">text</span> %</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnMod</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcOpButton(btnDivision)</code>
+                                <code>&emsp;btnDivision <span class="property">text</span> /</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnDivision</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn7)</code>
+                                <code>&emsp;btn7 <span class="property">text</span> 7</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn7</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn8)</code>
+                                <code>&emsp;btn8 <span class="property">text</span> 8</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn8</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn9)</code>
+                                <code>&emsp;btn9 <span class="property">text</span> 9</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn9</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcOpButton(btnMultiplication)</code>
+                                <code>&emsp;btnMultiplication <span class="property">text</span> X</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnMultiplication</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn4)</code>
+                                <code>&emsp;btn4 <span class="property">text</span> 4</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn4</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn5)</code>
+                                <code>&emsp;btn5 <span class="property">text</span> 5</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn5</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn6)</code>
+                                <code>&emsp;btn6 <span class="property">text</span> 6</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn6</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcOpButton(btnSubstraction)</code>
+                                <code>&emsp;btnSubstraction <span class="property">text</span> -</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnSubstraction</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn1)</code>
+                                <code>&emsp;btn1 <span class="property">text</span> 1</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn1</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn2)</code>
+                                <code>&emsp;btn2 <span class="property">text</span> 2</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn2</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn3)</code>
+                                <code>&emsp;btn3 <span class="property">text</span> 3</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn3</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcOpButton(btnAddition)</code>
+                                <code>&emsp;btnAddition <span class="property">text</span> +</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnAddition</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn0)</code>
+                                <code>&emsp;btn0 <span class="property">text</span> 0</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn0</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btnDot)</code>
+                                <code>&emsp;btnDot <span class="property">text</span> .</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnDot</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcOpButton(btnDel)</code>
+                                <code>&emsp;btnDel <span class="property">text</span> &larr;</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnDel</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcOpButton(btnEquals)</code>
+                                <code>&emsp;btnEquals <span class="property">text</span> =</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnEquals</code>
+                                <code>&rbrace;</code>
                             </p>
                             <p class="french">
-
-                            </p>
-                        </div>
-                    </section>
-
-                    <!-- Example Section -->
-                    <section class="block column gap10">
-                        <h3 class="english">Row Container</h3>
-                        <h3 class="french">Conteneur Row</h3>
-
-                        <!-- Assigning Values to Element's Properties -->
-                        <p class="english">
-                            A simple <strong>flexbox</strong> containing an <strong>image</strong> and a
-                            <strong>button</strong>, where the <strong>container</strong> has <strong>space
-                                between</strong> the elements:
-                        </p>
-                        <p class="french">
-                            Un simple <strong>flexbox</strong> contenant une <strong>image</strong> et un
-                            <strong>bouton</strong>, où le <strong>conteneur</strong> a un <strong>espacement
-                                entre</strong> les éléments :
-                        </p>
-
-                        <div class="console">
-                            <p class="english">
-                                <code><span class="comment"># Adding Row Container</code>
-                                <code><span class="keyword">add</span> <span class="type">row</span> <span class="variable">rowContainer</span></code>
-                                <code><span class="text">rowContainer</span> <span class="keyword">aitems</span> <span class="text">center</span></code>
-                                <code><span class="text">rowContainer</span> <span class="keyword">jcontent</span> <span class="text">sbetween</span></code>
-                                <code><span class="text">rowContainer</span> <span class="keyword">padding</span> <span class="text">40px 80px</span></code>
-                                <code><span class="text">rowContainer</span> <span class="keyword">border bottom</span> <span class="text">1px solid #999</span></code>
+                                <code><span class="comment"># Création d'un composant de boutons d'opérateurs de calculatrice</span></code>
+                                <code><span class="type">button</span> createCalcOpButton(btn)&lbrace;</code>
+                                <code>&emsp;<span class="text">btn</span> <span class="keyword">props</span> [<span class="property">width</span> 60px, <span class="property">height</span> 60px, <span class="property">bradius</span> 20px, <span class="property">outline</span> none, <span class="property">fsize</span> 1.2rem, bshadow rgba(0,0,0,0.2) -10px 10px 10px, <span class="property">color</span> white, <span class="property">background</span> royalblue, <span class="property">border</span> 1px solid #fff, <span class="property">cursor</span> pointer]</code>
+                                <code>&rbrace;</code>
                                 <br>
-                                <code><span class="comment"># Adding Image </code>
-                                <code><span class="keyword">add</span> <span class="type">image</span> <span class="variable">logo</span></code>
-                                <code><span class="text">logo</span> <span class="keyword">props</span> [<span class="property">src</span> https://cdn-icons-png.flaticon.com/64/2115/2115955.png, <span class="property">width</span> 48px, <span class="property">height</span> 48px]</code>
+                                <code><span class="comment"># Création d'un composant de boutons de numéros de calculatrice</span></code>
+                                <code><span class="type">button</span> createCalcNumButton(btn)&lbrace;</code>
+                                <code>&emsp;<span class="text">btn</span> <span class="keyword">props</span> [<span class="property">width</span> 60px, <span class="property">height</span> 60px, <span class="property">bradius</span> 20px, <span class="property">outline</span> none, <span class="property">fsize</span> 1.2rem, bshadow rgba(0,0,0,0.2) -10px 10px 10px, <span class="property">color</span> #333, <span class="property">background</span> white, <span class="property">border</span> 1px solid #666, <span class="property">cursor</span> pointer]</code>
+                                <code>&rbrace;</code>
                                 <br>
-                                <code><span class="comment"># Assigning Parent to the Image</code>
-                                <code><span class="text">rowContainer</span> <span class="keyword">parent of</span> <span class="text">logo</span></code>
+                                <code><span class="comment"># Création d'un composant de calculatrice</span></code>
+                                <code><span class="type">column</span> createCalculator(calc)&lbrace;</code>
+                                <code>&emsp;<span class="text">calc</span> <span class="keyword">props</span> [<span class="property">width</span> 350px, <span class="property">padding</span> 20px, <span class="property">background</span> white, <span class="property">bradius</span> 20px]</code>
                                 <br>
-                                <code><span class="comment"># Adding Button </code>
-                                <code><span class="keyword">add</span> <span class="type">button</span> <span class="variable">btn</span></code>
-                                <code><span class="text">btn</span> <span class="keyword">props</span> [<span class="property">padding</span> 10px 20px, <span class="property">text</span> Flexbox Example, <span class="property">border</span> none, <span class="property">background</span> #ddd, <span class="property">bradius</span> 30px, <span class="property">cursor</span> pointer]</code>
+                                <code>&emsp;<span class="comment"># Ajout d'une entrée de résultat</span></code>
+                                <code>&emsp;<span class="keyword">add</span> <span class="type">input</span> textBox</code>
+                                <code>&emsp;<span class="text">textBox</span> <span class="keyword">props</span> [<span class="property">width</span> 100%, <span class="property">background</span> transparent, <span class="property">color</span> royalblue, <span class="property">value</span> 2122, <span class="property">border</span> none, <span class="property">outline</span> none, <span class="property">fsize</span> 3rem, <span class="property">talign</span> right, <span class="property">padding bottom</span> 10px, <span class="property">padding top</span> 40px]</code>
+                                <code>&emsp;textBox <span class="keyword">attr</span> <span clas="property">readonly</span> readonly</code>
                                 <br>
-                                <code><span class="comment"># Assigning Parent to the Button</code>
-                                <code><span class="text">rowContainer</span> <span class="keyword">parent of</span> <span class="text">btn</span></code>
-                            </p>
-                            <p class="french">
-                                <code><span class="comment"># Ajout d'un conteneur de lignes</code>
-                                <code><span class="keyword">add</span> <span class="type">row</span> <span class="variable">rowContainer</span></code>
-                                <code><span class="text">rowContainer</span> <span class="keyword">aitems</span> <span class="text">center</span></code>
-                                <code><span class="text">rowContainer</span> <span class="keyword">jcontent</span> <span class="text">sbetween</span></code>
-                                <code><span class="text">rowContainer</span> <span class="keyword">padding</span> <span class="text">40px 80px</span></code>
-                                <code><span class="text">rowContainer</span> <span class="keyword">border bottom</span> <span class="text">1px solid #999</span></code>
+                                <code>&emsp;<span class="comment"># Affectation d'un parent à textBox</span></code>
+                                <code>&emsp;calc <span class="keyword">parent of</span> textBox</code>
                                 <br>
-                                <code><span class="comment"># Ajout d'une image </code>
-                                <code><span class="keyword">add</span> <span class="type">image</span> <span class="variable">logo</span></code>
-                                <code><span class="text">logo</span> <span class="keyword">props</span> [<span class="property">src</span> https://cdn-icons-png.flaticon.com/64/2115/2115955.png, <span class="property">width</span> 48px, <span class="property">height</span> 48px]</code>
+                                <code>&emsp;<span class="comment"># Ajout de texte d'équation</span></code>
+                                <code>&emsp;<span class="keyword">add</span> <span class="type">container</span> equationText</code>
+                                <code>&emsp;<span class="text">equationText</span> <span class="keyword">props</span> [<span class="property">width</span> 100%, <span class="property">talign</span> right, <span class="property">text</span> 346 + 74 * 24, <span class="property">fsize</span> 1.4rem, <span class="property">margin right</span> 20px, <span class="property">color</span> #555]</code>
                                 <br>
-                                <code><span class="comment"># Affectation d'un parent à l'image</code>
-                                <code><span class="text">rowContainer</span> <span class="keyword">parent of</span> <span class="text">logo</span></code>
+                                <code>&emsp;<span class="comment"># Affectation du parent à l'équationText</span></code>
+                                <code>&emsp;calc <span class="keyword">parent of</span> equationText</code>
                                 <br>
-                                <code><span class="comment"># Ajout d'un bouton </code>
-                                <code><span class="keyword">add</span> <span class="type">button</span> <span class="variable">btn</span></code>
-                                <code><span class="text">btn</span> <span class="keyword">props</span> [<span class="property">padding</span> 10px 20px, <span class="property">text</span> Flexbox Example, <span class="property">border</span> none, <span class="property">background</span> #ddd, <span class="property">bradius</span> 30px, <span class="property">cursor</span> pointer]</code>
+                                <code>&emsp;<span class="comment"># Ajout de GridView</span></code>
+                                <code>&emsp;<span class="keyword">add</span> <span class="type">grid</span> gridView</code>
+                                <code>&emsp;<span class="text">gridView</span> <span class="keyword">props</span> [<span class="property">width</span> 100%, <span class="property">gtcolumns</span> repeat(4, 1fr), <span class="property">gap</span> 20px, <span class="property">margin top</span> 40px]</code>
                                 <br>
-                                <code><span class="comment"># Affectation d'un parent au bouton</code>
-                                <code><span class="text">rowContainer</span> <span class="keyword">parent of</span> <span class="text">btn</span></code>
+                                <code>&emsp;<span class="comment"># Attribution d'un parent à GridView</span></code>
+                                <code>&emsp;calc <span class="keyword">parent of</span> gridView</code>
+                                <br>
+                                <code>&emsp;<span class="comment"># Ajout de boutons de calculatrice</span></code>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcOpButton(btnC)</code>
+                                <code>&emsp;btnC <span class="property">text</span> C</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnC</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcOpButton(btnPosNeg)</code>
+                                <code>&emsp;btnPosNeg <span class="property">text</span> + / -</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnPosNeg</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcOpButton(btnMod)</code>
+                                <code>&emsp;btnMod <span class="property">text</span> %</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnMod</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcOpButton(btnDivision)</code>
+                                <code>&emsp;btnDivision <span class="property">text</span> /</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnDivision</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn7)</code>
+                                <code>&emsp;btn7 <span class="property">text</span> 7</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn7</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn8)</code>
+                                <code>&emsp;btn8 <span class="property">text</span> 8</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn8</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn9)</code>
+                                <code>&emsp;btn9 <span class="property">text</span> 9</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn9</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcOpButton(btnMultiplication)</code>
+                                <code>&emsp;btnMultiplication <span class="property">text</span> X</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnMultiplication</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn4)</code>
+                                <code>&emsp;btn4 <span class="property">text</span> 4</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn4</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn5)</code>
+                                <code>&emsp;btn5 <span class="property">text</span> 5</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn5</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn6)</code>
+                                <code>&emsp;btn6 <span class="property">text</span> 6</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn6</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcOpButton(btnSubstraction)</code>
+                                <code>&emsp;btnSubstraction <span class="property">text</span> -</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnSubstraction</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn1)</code>
+                                <code>&emsp;btn1 <span class="property">text</span> 1</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn1</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn2)</code>
+                                <code>&emsp;btn2 <span class="property">text</span> 2</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn2</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn3)</code>
+                                <code>&emsp;btn3 <span class="property">text</span> 3</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn3</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcOpButton(btnAddition)</code>
+                                <code>&emsp;btnAddition <span class="property">text</span> +</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnAddition</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btn0)</code>
+                                <code>&emsp;btn0 <span class="property">text</span> 0</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btn0</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcNumButton(btnDot)</code>
+                                <code>&emsp;btnDot <span class="property">text</span> .</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnDot</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcOpButton(btnDel)</code>
+                                <code>&emsp;btnDel <span class="property">text</span> &larr;</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnDel</code>
+                                <br>
+                                <code>&emsp;<span class="keyword">exec</span> createCalcOpButton(btnEquals)</code>
+                                <code>&emsp;btnEquals <span class="property">text</span> =</code>
+                                <code>&emsp;gridView <span class="keyword">parent of</span> btnEquals</code>
+                                <code>&rbrace;</code>
                             </p>
                         </div>
                     </section>

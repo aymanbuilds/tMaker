@@ -7,6 +7,9 @@ let functionsArray = [];
 // Global array to store the output
 let outputArray = [];
 
+// Global Custom Css Styles
+var customCssMediaStyles = '';
+
 // Function to check if an element with the given ID already exists
 function elementExists(id) {
     return elementsArray.some(element => element.id === id);
@@ -94,6 +97,94 @@ function parseProps(input) {
     });
 }
 
+// Function to process each command block
+function processMediaCommandBlock(firstWord, secondWord, propsContent, parentSelector) {
+    let customCss = '';
+
+    let propsArray = propsContent.split(',').map(item => item.trim());
+
+    if (firstWord === 'type') {
+        customCss += `.${parentSelector} ${secondWord} {\n`;
+    } else if (firstWord === 'class') {
+        customCss += `.${parentSelector} .${secondWord} {\n`;
+    } else if (firstWord === 'this') {
+        customCss += `.${parentSelector} {\n`;
+    }
+
+    propsArray.forEach(item => {
+        const parts = item.trim().split(' ');
+        let property = parts[0];
+        let sideOrValue = parts.slice(1).join(' ');
+        const formatted = formatCssPropertyAndValue(property, sideOrValue);
+        property = formatted.property;
+        sideOrValue = formatted.value;
+
+        customCss += `${property}: ${sideOrValue};\n`;
+    });
+
+    customCss += `}\n`;
+
+    return customCss;
+}
+
+// Function to process Responsivness
+function processResponsivenessRules(styles) {
+    // Responsivness
+    // Regular expression to match the pattern and capture content within {}
+    let regex = /^\s*(\w+)\s+responsive\s+\(([^)]+)\)\s*{([^}]*)}/gm;
+
+    // Find all matches
+    let matches = [];
+    let match;
+    while ((match = regex.exec(styles)) !== null) {
+        matches.push({
+            firstWord: match[1],              // The first word in the line
+            fullMatch: match[0],              // The whole matched string
+            parenthesisContent: match[2],     // The content inside the parentheses
+            commands: match[3]                // The content inside the braces
+        });
+    }
+
+    matches.forEach(m => {
+        // Remove the matched content from styles
+        styles = styles.replace(m.fullMatch, '');
+
+        // Get the text inside the parentheses
+        let parenthesisContent = m.parenthesisContent.trim();
+        const responsivness_rule = formatCssPropertyAndValue(parenthesisContent.split(':')[0], '').property + ': ' + parenthesisContent.split(':')[1].trim();
+
+        customCssMediaStyles += `@media (${responsivness_rule}) {\n`;
+
+        // Split the commands by newline
+        let commands = m.commands.split('\n');
+
+        commands.forEach(command => {
+            let parts = command.trim().split(' ');
+            let firstWord = parts[0];
+            let secondWord = parts[1];
+
+            if (firstWord && secondWord) {
+                // Extract props content between []
+                let propsContent = command.trim().match(/\[(.*?)\]/);
+                if (propsContent) {
+                    propsContent = propsContent[1].trim();
+
+                    // Process the command block
+                    customCssMediaStyles += processMediaCommandBlock(firstWord, secondWord, propsContent, m.firstWord);
+                }
+            }
+        });
+
+        customCssMediaStyles += `}\n`;
+    });
+
+    // Return the modified styles
+    return {
+        newCommands: styles,
+        customCssMediaStyles: customCssMediaStyles
+    };
+}
+
 // Function to parse multiple commands split by lines
 function compile(preview) {
     showLoader();
@@ -101,8 +192,6 @@ function compile(preview) {
     let functionsArray = [];
     let functionsInputValue = document.getElementById('functionsInput').value;
     functionsInputValue = functionsInputValue.split('\n').filter(line => !line.trim().startsWith('#')).join('\n');
-
-
 
     let functionBlocks = functionsInputValue.trim().split(/}\s*/);
 
@@ -173,9 +262,7 @@ function compile(preview) {
 
     let styles = document.getElementById('stylesInput').value;
     styles = styles.split('\n').filter(line => !line.trim().startsWith('#')).join('\n');
-    // styles = styles.replace(/(\w+)\s+props\s*\(([^)]+)\)/g, (match, firstWord, properties) => {
-    //     return properties.split(',').map(prop => `${firstWord} ${prop.trim()}`).join('\n');
-    // });
+    styles = processResponsivenessRules(styles).newCommands;
     styles = parseProps(styles);
 
     const stylesLines = styles.trim().split('\n');
@@ -186,6 +273,7 @@ function compile(preview) {
 
     let commands = document.getElementById('in').value;
     commands = commands.split('\n').filter(line => !line.trim().startsWith('#')).join('\n');
+    commands = processResponsivenessRules(commands).newCommands;
     commands = parseProps(commands);
     const lines = commands.trim().split('\n');
     lines.forEach(line => {
@@ -202,7 +290,7 @@ function compile(preview) {
     }, 1000);
 }
 
-function execFunction(commands,functionsArray) {
+function execFunction(commands, functionsArray) {
     const lines = commands.trim().split('\n');
     lines.forEach(line => {
         if (line !== '')
@@ -335,7 +423,7 @@ function formatCssPropertyAndValue(property, value) {
 
 // Function to parse a single command and create the HTML element or manage parent-child relationships
 function parseSingleCommand(command, functionsArray) {
-    if(command.trim().startsWith('#')){
+    if (command.trim().startsWith('#')) {
         return;
     }
 
@@ -544,7 +632,7 @@ function parseSingleCommand(command, functionsArray) {
                         outputArray.push({ 'success': true, 'message': `Set ${property} of element with ID '${id}' to '${value}'.` });
                         break;
                 }
-            } else if (property === 'border-radius') {
+            } else if (property === 'border-radius' || property === 'bradius') {
                 switch (sideOrValue) {
                     case 'topleft':
                         element.style.borderTopLeftRadius = value;
@@ -749,7 +837,7 @@ function parseSingleCommand(command, functionsArray) {
                             if (words[0] === func.parameters[0])
                                 words[0] = `${firstParam}`;
                         }
-                        else if(words[0] == 'exec'){
+                        else if (words[0] == 'exec') {
                             words[1] = words[1].replace(/\((.*?)\)/, (match, pr) => `(${firstParam}_${pr})`);
                         }
 
@@ -758,7 +846,7 @@ function parseSingleCommand(command, functionsArray) {
 
                     let modifiedBodyLines = lines.join("\n");
 
-                    execFunction(modifiedBodyLines,functionsArray);
+                    execFunction(modifiedBodyLines, functionsArray);
                 } else {
                     console.error(`Function ${functionName} not found.`);
                     outputArray.push({ 'success': false, 'message': `Function ${functionName} not found.` });
@@ -860,6 +948,8 @@ function previewHTML(build) {
         }
     });
 
+    styleContent += customCssMediaStyles;
+
     // Create a single <style> element to hold all styles
     if (styleContent) {
         const styleElement = previewWindow.document.createElement('style');
@@ -948,6 +1038,8 @@ function saveToFile() {
             `;
             }
         });
+
+        styleContent += customCssMediaStyles;
 
         // Create a single <style> element to hold all styles
         if (styleContent) {

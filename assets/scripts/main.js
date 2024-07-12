@@ -106,6 +106,9 @@ let colorMap = {
     'align-self': propertiesColor,
     'max-height': propertiesColor,
     'min-height': propertiesColor,
+
+    'responsive':propertiesColor,
+
     'container': keywordsColor,
     'font-size': propertiesColor,
     'bposition': propertiesColor,
@@ -290,7 +293,9 @@ let colorMap = {
     // 'time': propertiesColor,
     // 'text': propertiesColor,
     // 'file': propertiesColor,
-    'type': propertiesColor,
+    'class': keywordsColor,
+    'this': keywordsColor,
+    'type': keywordsColor,
 
     'attr': keywordsColor,
 
