@@ -9,6 +9,7 @@ let outputArray = [];
 
 // Global Custom Css Styles
 var customCssMediaStyles = '';
+var customCssStyles = '';
 
 // Function to check if an element with the given ID already exists
 function elementExists(id) {
@@ -99,16 +100,44 @@ function parseProps(input) {
 
 // Function to process each command block
 function processMediaCommandBlock(firstWord, secondWord, propsContent, parentSelector) {
+    const stylesInputValue = document.getElementById('stylesInput').value;
+    const regexPattern = new RegExp(`^add (\\w+) ${parentSelector}$`, 'm');
+    const match = regexPattern.exec(stylesInputValue);
+
+    if (match) {
+        const secondWord = match[1];
+        if (secondWord.trim().toLowerCase() === 'style')
+            parentSelector = '.' + parentSelector;
+        else {
+            parentSelector = '#' + parentSelector;
+        }
+    } else {
+        let codeCommandsValue = document.getElementById('in').value;
+        const match = regexPattern.exec(codeCommandsValue);
+
+        if (match) {
+            const secondWord = match[1];
+            if (secondWord.trim().toLowerCase() === 'style')
+                parentSelector = '.' + parentSelector;
+            else {
+                parentSelector = '#' + parentSelector;
+            }
+        }
+        else {
+            parentSelector = '#' + parentSelector;
+        }
+    }
+
     let customCss = '';
 
     let propsArray = propsContent.split(',').map(item => item.trim());
 
     if (firstWord === 'type') {
-        customCss += `.${parentSelector} ${secondWord} {\n`;
+        customCss += `${parentSelector} ${secondWord} {\n`;
     } else if (firstWord === 'class') {
-        customCss += `.${parentSelector} .${secondWord} {\n`;
+        customCss += `${parentSelector} .${secondWord} {\n`;
     } else if (firstWord === 'this') {
-        customCss += `.${parentSelector} {\n`;
+        customCss += `${parentSelector} {\n`;
     }
 
     propsArray.forEach(item => {
@@ -118,6 +147,42 @@ function processMediaCommandBlock(firstWord, secondWord, propsContent, parentSel
         const formatted = formatCssPropertyAndValue(property, sideOrValue);
         property = formatted.property;
         sideOrValue = formatted.value;
+
+        let value = '';
+
+        if (['margin', 'padding', 'border'].includes(property)) {
+            switch (parts[1]) {
+                case 'left':
+                case 'top':
+                case 'right':
+                case 'bottom':
+                    property = `${property}-${parts[1]}`;
+                    sideOrValue = parts.slice(2).join(' ');
+                    break;
+                default:
+                    sideOrValue = parts.slice(1).join(' ');
+                    break;
+            }
+        } else if (property === 'border-radius' || property === 'bradius') {
+            sideOrValue = parts.slice(2).join(' ');
+            switch (parts[1]) {
+                case 'topleft':
+                    property = 'border-top-left-radius';
+                    break;
+                case 'topright':
+                    property = 'border-top-right-radius';
+                    break;
+                case 'bottomleft':
+                    property = 'border-bottom-left-radius';
+                    break;
+                case 'bottomright':
+                    property = 'border-bottom-right-radius';
+                    break;
+                default:
+                    sideOrValue = parts.slice(1).join(' ');
+                    break;
+            }
+        }
 
         customCss += `${property}: ${sideOrValue};\n`;
     });
@@ -129,6 +194,12 @@ function processMediaCommandBlock(firstWord, secondWord, propsContent, parentSel
 
 // Function to process Responsivness
 function processResponsivenessRules(styles) {
+    // calculatorStyle responsive (maxwidth:400px) {
+    //     this props [padding 10px, padding top 20px, bradius 20px, bradius bottomright 40px]
+    //     type button props [opacity 0.5]
+    //     class numButtonStyles props [width 50px]
+    // }
+
     // Responsivness
     // Regular expression to match the pattern and capture content within {}
     let regex = /^\s*(\w+)\s+responsive\s+\(([^)]+)\)\s*{([^}]*)}/gm;
@@ -182,6 +253,126 @@ function processResponsivenessRules(styles) {
     return {
         newCommands: styles,
         customCssMediaStyles: customCssMediaStyles
+    };
+}
+
+// Function to process each command block
+function processCssCommandBlock(firstWord, secondWord, propsContent, parentSelector) {
+    parentSelector = '.' + parentSelector;
+
+    let customCss = '';
+
+    let propsArray = propsContent.split(',').map(item => item.trim());
+
+    if (firstWord === 'type') {
+        customCss += `${parentSelector} ${secondWord} {\n`;
+    } else if (firstWord === 'class') {
+        customCss += `${parentSelector} .${secondWord} {\n`;
+    } else if (firstWord === 'this') {
+        customCss += `${parentSelector} {\n`;
+    }
+
+    propsArray.forEach(item => {
+        const parts = item.trim().split(' ');
+        let property = parts[0];
+        let sideOrValue = parts.slice(1).join(' ');
+        const formatted = formatCssPropertyAndValue(property, sideOrValue);
+        property = formatted.property;
+        sideOrValue = formatted.value;
+
+        let value = '';
+
+        if (['margin', 'padding', 'border'].includes(property)) {
+            switch (parts[1]) {
+                case 'left':
+                case 'top':
+                case 'right':
+                case 'bottom':
+                    property = `${property}-${parts[1]}`;
+                    sideOrValue = parts.slice(2).join(' ');
+                    break;
+                default:
+                    sideOrValue = parts.slice(1).join(' ');
+                    break;
+            }
+        } else if (property === 'border-radius' || property === 'bradius') {
+            sideOrValue = parts.slice(2).join(' ');
+            switch (parts[1]) {
+                case 'topleft':
+                    property = 'border-top-left-radius';
+                    break;
+                case 'topright':
+                    property = 'border-top-right-radius';
+                    break;
+                case 'bottomleft':
+                    property = 'border-bottom-left-radius';
+                    break;
+                case 'bottomright':
+                    property = 'border-bottom-right-radius';
+                    break;
+                default:
+                    sideOrValue = parts.slice(1).join(' ');
+                    break;
+            }
+        }
+
+        customCss += `${property}: ${sideOrValue};\n`;
+    });
+
+    customCss += `}\n`;
+
+    return customCss;
+}
+
+function processCssRules(styles) {
+    // add style s {
+    //     this props [padding left 20px]
+    //     type button props [bradius 10px]
+    //     class inner props [width 50%, height 50%]
+    // }
+    
+    // Regular expression to match the pattern and capture content within {}
+    let regex = /^\s*add\s+style\s+(\w+)\s*{([^}]*)}/gm;
+
+    // Find all matches
+    let matches = [];
+    let match;
+    while ((match = regex.exec(styles)) !== null) {
+        matches.push({
+            varName: match[1],               // The variable name after 'add style'
+            fullMatch: match[0],             // The whole matched string
+            commands: match[2]               // The content inside the braces
+        });
+    }
+
+    // Process each match
+    matches.forEach(m => {
+        // Remove the matched content from styles
+        styles = styles.replace(m.fullMatch, '');
+
+        // Split the commands by newline
+        let commands = m.commands.split('\n').map(cmd => cmd.trim()).filter(cmd => cmd);
+
+        // Loop through each command (but leave it empty as per your requirement)
+        commands.forEach(command => {
+            let parts = command.split(' ');
+            let firstWord = parts[0];
+            let secondWord = parts[1];
+            let props = command.match(/\[(.*?)\]/);
+
+            if (firstWord && props) {
+                let propsContent = props[1].trim();
+
+                // Process the command block
+                customCssStyles += processCssCommandBlock(firstWord, secondWord, propsContent, m.varName);
+            }
+        });
+    });
+
+    // Return the modified styles
+    return {
+        newCommands: styles,
+        customCssMediaStyles: customCssStyles
     };
 }
 
@@ -263,6 +454,7 @@ function compile(preview) {
     let styles = document.getElementById('stylesInput').value;
     styles = styles.split('\n').filter(line => !line.trim().startsWith('#')).join('\n');
     styles = processResponsivenessRules(styles).newCommands;
+    styles = processCssRules(styles).newCommands;
     styles = parseProps(styles);
 
     const stylesLines = styles.trim().split('\n');
@@ -274,6 +466,7 @@ function compile(preview) {
     let commands = document.getElementById('in').value;
     commands = commands.split('\n').filter(line => !line.trim().startsWith('#')).join('\n');
     commands = processResponsivenessRules(commands).newCommands;
+    commands = processCssRules(commands).newCommands;
     commands = parseProps(commands);
     const lines = commands.trim().split('\n');
     lines.forEach(line => {
@@ -885,6 +1078,43 @@ function parseSingleCommand(command, functionsArray) {
     }
 }
 
+function mergeMediaQueries(css) {
+    // Function to extract media queries and their rules
+    const extractMediaQueries = (css) => {
+        const mediaQueryRegex = /@media[^{]+\{([\s\S]+?\})\s*\}/g;
+        let match;
+        const mediaQueries = {};
+
+        while ((match = mediaQueryRegex.exec(css)) !== null) {
+            const query = match[0].match(/@media[^{]+/)[0];
+            const rules = match[1];
+
+            if (!mediaQueries[query]) {
+                mediaQueries[query] = [];
+            }
+            mediaQueries[query].push(rules);
+        }
+        return mediaQueries;
+    };
+
+    // Function to merge rules within the same media query
+    const mergeRules = (rules) => {
+        return rules.join('\n');
+    };
+
+    // Function to generate the final CSS with merged media queries
+    const generateCSS = (mediaQueries) => {
+        let result = css.replace(/@media[^{]+\{([\s\S]+?\})\s*\}/g, '');
+        for (const query in mediaQueries) {
+            result += `${query} {\n${mergeRules(mediaQueries[query])}\n}\n`;
+        }
+        return result;
+    };
+
+    const mediaQueries = extractMediaQueries(css);
+    return generateCSS(mediaQueries);
+}
+
 // Function to preview HTML in a new window
 function previewHTML(build) {
     if (build) {
@@ -939,6 +1169,8 @@ function previewHTML(build) {
     }
     `;
 
+    styleContent += customCssStyles + '\n';
+
     elementsArray.forEach(element => {
         if (element.tagName.toLowerCase() === 'style') {
             styleContent += `.${element.id} {
@@ -948,7 +1180,7 @@ function previewHTML(build) {
         }
     });
 
-    styleContent += customCssMediaStyles;
+    styleContent += mergeMediaQueries(customCssMediaStyles);
 
     // Create a single <style> element to hold all styles
     if (styleContent) {
@@ -1030,6 +1262,8 @@ function saveToFile() {
         }
         `;
 
+        styleContent += customCssStyles+'\n';
+
         elementsArray.forEach(element => {
             if (element.tagName.toLowerCase() === 'style') {
                 styleContent += `.${element.id} {
@@ -1039,7 +1273,7 @@ function saveToFile() {
             }
         });
 
-        styleContent += customCssMediaStyles;
+        styleContent += mergeMediaQueries(customCssMediaStyles);
 
         // Create a single <style> element to hold all styles
         if (styleContent) {

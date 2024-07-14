@@ -200,6 +200,65 @@
                             </p>
                         </div>
                     </section>
+
+                    <!-- Syntax Section -->
+                    <section class="block column gap10">
+                        <h3 class="english">Advanced Syntax</h3>
+                        <h3 class="french">Syntaxe avancée</h3>
+
+                        <!-- Creating Component -->
+                        <p class="english">
+                            To use <strong>descendant selectors</strong>, we can include <strong>properties</strong>
+                            inside a <strong>block</strong> enclosed by <strong>{ }</strong>. We specify the
+                            <strong>style name</strong>, and in the <strong>body</strong> we specify three things:
+                            we can select <strong>properties</strong> for the current <strong>style</strong> using the
+                            <strong>keyword "this"</strong>, or a <strong>type name</strong> using the syntax
+                            <strong>"type _type_name"</strong>, or a <strong>class name</strong> using the syntax
+                            <strong>"class _class_name"</strong>.
+                        </p>
+                        <p class="french">
+                            Pour utiliser les <strong>sélécteurs descendants</strong>, nous pouvons inclure des
+                            <strong>propriétés</strong> à l'intérieur d'un <strong>bloc</strong> entouré de
+                            <strong>{ }</strong>. Nous spécifions le <strong>nom</strong> du <strong>style</strong>, et
+                            dans le
+                            <strong>corps</strong> nous spécifions trois choses : nous pouvons sélectionner des
+                            <strong>propriétés</strong> pour le <strong>style</strong> actuel en utilisant le
+                            <strong>mot-clé "this"</strong>, ou un <strong>nom</strong> de <strong>type</strong> en
+                            utilisant la syntaxe
+                            <strong>"type _nom_du_type"</strong>, ou un <strong>nom</strong> de <strong>classe</strong>
+                            en utilisant la
+                            syntaxe <strong>"class _nom_de_classe"</strong>.
+                        </p>
+
+                        <div class="console">
+                            <p class="english">
+                                <code><span class="comment"># add style _style_variable_name &lbrace;</span></code>
+                                <code><span class="comment">#</span>&emsp;<span class="comment">this props [_prop1, _prop2]</span></code>
+                                <code><span class="comment">#</span>&emsp;<span class="comment">type button props [_prop1, _prop2]</span></code>
+                                <code><span class="comment">#</span>&emsp;<span class="comment">class inner props [_prop1, _prop2]</span></code>
+                                <code><span class="comment">&rbrace;</span></code>
+                                <code><span class="comment"># For example:</span></code>
+                                <code><span class="keyword">add</span> <span class="type">style</span> logoContainerStyles &lbrace;</code>
+                                <code>&emsp;<span class="keyword">this</span> <span class="keyword">props</span> [<span class="property">display</span> flex, <span class="property">fdirection</span> row, <span class="property">aitems</span> center, <span class="property">gap</span> 20px]</code>
+                                <code>&emsp;<span class="keyword">type</span> <span class="type">h1</span> <span class="keyword">props</span> [<span class="property">fsize</span> 1.4rem]</code>
+                                <code>&emsp;<span class="keyword">class</span> logo <span class="keyword">props</span> [<span class="property">width</span> 40px, <span class="property">height</span> 40px]</code>
+                                <code>&rbrace;</code>
+                            </p>
+                            <p class="french">
+                                <code><span class="comment"># add style _style_variable_name &lbrace;</span></code>
+                                <code><span class="comment">#</span>&emsp;<span class="comment">this props [_prop1, _prop2]</span></code>
+                                <code><span class="comment">#</span>&emsp;<span class="comment">type button props [_prop1, _prop2]</span></code>
+                                <code><span class="comment">#</span>&emsp;<span class="comment">class inner props [_prop1, _prop2]</span></code>
+                                <code><span class="comment">&rbrace;</span></code>
+                                <code><span class="comment"># Par exemple:</span></code>
+                                <code><span class="keyword">add</span> <span class="type">style</span> logoContainerStyles &lbrace;</code>
+                                <code>&emsp;<span class="keyword">this</span> <span class="keyword">props</span> [<span class="property">display</span> flex, <span class="property">fdirection</span> row, <span class="property">aitems</span> center, <span class="property">gap</span> 20px]</code>
+                                <code>&emsp;<span class="keyword">type</span> <span class="type">h1</span> <span class="keyword">props</span> [<span class="property">fsize</span> 1.4rem]</code>
+                                <code>&emsp;<span class="keyword">class</span> logo <span class="keyword">props</span> [<span class="property">width</span> 40px, <span class="property">height</span> 40px]</code>
+                                <code>&rbrace;</code>
+                            </p>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>
