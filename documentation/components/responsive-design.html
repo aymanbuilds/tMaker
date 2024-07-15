@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - Responsive Design</title>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../assets/styles/main.css">
+    <link rel="stylesheet" href="../assets/styles/queries.css">
+</head>
+
+<body>
+    <!-- Main Header -->
+    <header class="main">
+        <!-- Mobile Menu Icon -->
+        <img id="mobile-menu" onclick="openSidebar()" src="../assets/icons/menu.png" alt="Menu">
+
+        <!-- Title Container -->
+        <div id="header-title-container" class="row aitems-center gap10">
+            <div class="title">Template Maker</div>
+            <div class="description">Docs</div>
+        </div>
+
+        <!-- Searchbar -->
+        <div class="search-bar">
+            <input id="search-input" type="text" placeholder="Search for something...">
+            <img src="../assets/icons/search.png" alt="Search">
+
+            <!-- Suggestions Box -->
+            <div class="suggestions">
+                <div class="item unclickable">No results</div>
+            </div>
+        </div>
+
+        <!-- Language Container -->
+        <div>
+            <button onclick="showPopup('language');" class="row aitems-center gap10 clickable">
+                <img id="language-icon" class="icon" src="../assets/icons/english.png" alt="Language">
+                <span id="language-label" class="label">English</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main>
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Mobile Close Sidebar -->
+            <div onclick="hideSidebar()" class="close">
+                <img src="../assets/icons/close.png" alt="Close">
+            </div>
+
+            <nav>
+                <ul>
+                    <li class="english">Home</li>
+                    <li class="french">Accueil</li>
+                    <ul>
+                        <li class="english"><a href="../index.html">Getting Started</a></li>
+                        <li class="french"><a href="../index.html">Commencer</a></li>
+                    </ul>
+                    <li class="english">Usage</li>
+                    <li class="french">Utilisation</li>
+                    <ul>
+                        <li class="english"><a href="basic-commands.html">Basic Commands</a></li>
+                        <li class="french"><a href="basic-commands.html">Commandes de base</a></li>
+                        <li class="english"><a href="advanced-commands.html">Advanced Commands</a></li>
+                        <li class="french"><a href="advanced-commands.html">Commandes avancées</a></li>
+                        <li class="english"><a href="examples.html">Examples</a></li>
+                        <li class="french"><a href="examples.html">Exemples</a></li>
+                    </ul>
+                    <li class="english">Components</li>
+                    <li class="french">Composants</li>
+                    <ul>
+                        <li class="english"><a href="creating-components.html">Creating Components</a>
+                        </li>
+                        <li class="french"><a href="creating-components.html">Créer des composants</a>
+                        </li>
+                        <li class="english"><a href="using-components.html">Using Components</a></li>
+                        <li class="french"><a href="using-components.html">Utiliser des composants</a></li>
+                        <li class="english"><a href="component-examples.html">Component Examples</a></li>
+                        <li class="french"><a href="component-examples.html">Exemples de composants</a></li>
+                    </ul>
+                    <li class="english">Styles</li>
+                    <li class="french">Styles</li>
+                    <ul>
+                        <li class="english"><a href="applying-styles.html">Applying Styles</a></li>
+                        <li class="french"><a href="applying-styles.html">Appliquer des styles</a></li>
+                        <li class="english"><a href="responsive-design.html" class="active">Responsive Design</a></li>
+                        <li class="french"><a href="responsive-design.html" class="active">Design réactif</a></li>
+                        <li class="english"><a href="style-examples.html">Style Examples</a></li>
+                        <li class="french"><a href="style-examples.html">Exemples de style</a></li>
+                    </ul>
+                    <li class="english">Tutorials</li>
+                    <li class="french">Tutoriels</li>
+                    <ul>
+                        <li class="english"><a href="tutorials.html">Tutorials</a></li>
+                        <li class="french"><a href="tutorials.html">Tutoriels</a></li>
+                    </ul>
+                    <li class="english">About</li>
+                    <li class="french">À propos</li>
+                    <ul>
+                        <li class="english"><a href="about-tmaker.html">About tMaker</a></li>
+                        <li class="french"><a href="about-tmaker.html">À propos de tMaker</a></li>
+                        <li class="english"><a href="about-developer.html">About the Developer</a></li>
+                        <li class="french"><a href="about-developer.html">À propos du développeur</a></li>
+                    </ul>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Inner Container -->
+            <div class="inner">
+                <!-- Header Container -->
+                <header class="row aitems-center jcontent-center gap40">
+                    <!-- Display Container -->
+                    <div class="display-content">
+                        <img src="../assets/images/documentation.png" alt="Documentation">
+                    </div>
+
+                    <!-- Text Container -->
+                    <div class="text-content column gap10">
+                        <h2 class="english">Responsive Design</h2>
+                        <h2 class="french">Design réactif</h2>
+                        <p class="english">
+                            With tMaker, you can easily make your template responsive by using a simple syntax to define
+                            media queries. Discover how to bring responsiveness to your website with ease.
+                        </p>
+                        <p class="french">
+                            Avec tMaker, vous pouvez facilement rendre votre modèle responsive en utilisant une syntaxe
+                            simple pour définir des media queries. Découvrez comment apporter de la réactivité à votre
+                            site web en toute simplicité.
+                        </p>
+                    </div>
+                </header>
+
+                <!-- Content Container -->
+                <div class="informative column gap80">
+                    <!-- Syntax Section -->
+                    <section class="block column gap10">
+                        <h3 class="english">Basic Syntax</h3>
+                        <h3 class="french">Syntaxe de Base</h3>
+
+                        <!-- Creating Component -->
+                        <p class="english">
+                            To create a <strong>responsiveness rule</strong>, simply define a <strong>rule</strong> for
+                            the <strong>style element</strong>, and then start defining your <strong>props</strong> for
+                            either <strong>the current style</strong> or a <strong>descendant selector</strong>:
+                        </p>
+                        <p class="french">
+                            Pour créer une <strong>règle de réactivité</strong>, définissez simplement une
+                            <strong>règle</strong> pour l'<strong>élément de style</strong>, puis commencez à définir
+                            vos <strong>propriétés</strong> pour <strong>le style actuel</strong> ou un
+                            <strong>sélecteur descendant</strong> :
+                        </p>
+
+                        <div class="console">
+                            <p class="english">
+                                <code><span class="comment"># _style_variable_name responsive (rule) &lbrace;</span></code>
+                                <code><span class="comment">#</span>&emsp;<span class="comment">this props [_prop1, _prop2]</span></code>
+                                <code><span class="comment">#</span>&emsp;<span class="comment">type button props [_prop1, _prop2]</span></code>
+                                <code><span class="comment">#</span>&emsp;<span class="comment">class inner props [_prop1, _prop2]</span></code>
+                                <code><span class="comment">&rbrace;</span></code>
+                                <code><span class="comment"># For example:</span></code>
+                                <code>logoContainerStyles <span class="property">responsive</span> (<span class="property">max-width</span>: 800px) &lbrace;</code>
+                                <code>&emsp;<span class="keyword">this</span> <span class="keyword">props</span> [<span class="property">gap</span> 10px]</code>
+                                <code>&emsp;<span class="keyword">type</span> <span class="type">img</span> <span class="keyword">props</span> [<span class="property">width</span> 28px]</code>
+                                <code>&emsp;<span class="keyword">class</span> textTitle <span class="keyword">props</span> [<span class="property">fsize</span> 1.4rem]</code>
+                                <code>&rbrace;</code>
+                            </p>
+                            <p class="french">
+                                <code><span class="comment"># _style_variable_name responsive (rule) &lbrace;</span></code>
+                                <code><span class="comment">#</span>&emsp;<span class="comment">this props [_prop1, _prop2]</span></code>
+                                <code><span class="comment">#</span>&emsp;<span class="comment">type button props [_prop1, _prop2]</span></code>
+                                <code><span class="comment">#</span>&emsp;<span class="comment">class inner props [_prop1, _prop2]</span></code>
+                                <code><span class="comment">&rbrace;</span></code>
+                                <code><span class="comment"># Par exemple:</span></code>
+                                <code>logoContainerStyles <span class="property">responsive</span> (<span class="property">max-width</span>: 800px) &lbrace;</code>
+                                <code>&emsp;<span class="keyword">this</span> <span class="keyword">props</span> [<span class="property">gap</span> 10px]</code>
+                                <code>&emsp;<span class="keyword">type</span> <span class="type">img</span> <span class="keyword">props</span> [<span class="property">width</span> 28px]</code>
+                                <code>&emsp;<span class="keyword">class</span> textTitle <span class="keyword">props</span> [<span class="property">fsize</span> 1.4rem]</code>
+                                <code>&rbrace;</code>
+                            </p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Popups -->
+    <div id="popups">
+        <div id="language" class="popup">
+            <header>
+                <h2>Language</h2>
+                <img onclick="hidePopup('language');" src="../assets/icons/close.png" alt="Close">
+            </header>
+            <ul>
+                <li onclick="changeLanguage('english')">English</li>
+                <li onclick="changeLanguage('french')">Français</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Javascript -->
+    <script src="../assets/scripts/main.js"></script>
+</body>
+
+</html>

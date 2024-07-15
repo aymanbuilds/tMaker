@@ -98,10 +98,42 @@ function parseProps(input) {
     });
 }
 
+function splitProps(propsContent) {
+    let propsArray = [];
+    let tempProp = '';
+    let bracketsCount = 0;
+    let insideFunction = false;
+
+    for (let i = 0; i < propsContent.length; i++) {
+        if (propsContent[i] === '(') {
+            bracketsCount++;
+            insideFunction = true;
+        } else if (propsContent[i] === ')') {
+            bracketsCount--;
+            if (bracketsCount === 0) {
+                insideFunction = false;
+            }
+        }
+
+        if (propsContent[i] === ',' && bracketsCount === 0 && !insideFunction) {
+            propsArray.push(tempProp.trim());
+            tempProp = '';
+        } else {
+            tempProp += propsContent[i];
+        }
+    }
+
+    if (tempProp.trim()) {
+        propsArray.push(tempProp.trim());
+    }
+
+    return propsArray.map(item => item.trim());
+}
+
 // Function to process each command block
 function processMediaCommandBlock(firstWord, secondWord, propsContent, parentSelector) {
     const stylesInputValue = document.getElementById('stylesInput').value;
-    const regexPattern = new RegExp(`^add (\\w+) ${parentSelector}$`, 'm');
+    const regexPattern = new RegExp(`^add (\\w+)\\s+${parentSelector}\\s*(?:\\{|\\s*\\{)?$`, 'm');
     const match = regexPattern.exec(stylesInputValue);
 
     if (match) {
@@ -130,7 +162,8 @@ function processMediaCommandBlock(firstWord, secondWord, propsContent, parentSel
 
     let customCss = '';
 
-    let propsArray = propsContent.split(',').map(item => item.trim());
+    // let propsArray = propsContent.split(',').map(item => item.trim());
+    const propsArray = splitProps(propsContent);
 
     if (firstWord === 'type') {
         customCss += `${parentSelector} ${secondWord} {\n`;
@@ -262,7 +295,7 @@ function processCssCommandBlock(firstWord, secondWord, propsContent, parentSelec
 
     let customCss = '';
 
-    let propsArray = propsContent.split(',').map(item => item.trim());
+    const propsArray = splitProps(propsContent);
 
     if (firstWord === 'type') {
         customCss += `${parentSelector} ${secondWord} {\n`;
@@ -330,7 +363,7 @@ function processCssRules(styles) {
     //     type button props [bradius 10px]
     //     class inner props [width 50%, height 50%]
     // }
-    
+
     // Regular expression to match the pattern and capture content within {}
     let regex = /^\s*add\s+style\s+(\w+)\s*{([^}]*)}/gm;
 
@@ -379,6 +412,9 @@ function processCssRules(styles) {
 // Function to parse multiple commands split by lines
 function compile(preview) {
     showLoader();
+
+    customCssMediaStyles = '';
+    customCssStyles = '';
 
     let functionsArray = [];
     let functionsInputValue = document.getElementById('functionsInput').value;
@@ -1262,7 +1298,7 @@ function saveToFile() {
         }
         `;
 
-        styleContent += customCssStyles+'\n';
+        styleContent += customCssStyles + '\n';
 
         elementsArray.forEach(element => {
             if (element.tagName.toLowerCase() === 'style') {

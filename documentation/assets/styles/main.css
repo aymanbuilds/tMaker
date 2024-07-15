@@ -60,6 +60,10 @@ header.main {
     flex-direction: column;
 }
 
+.fwrap {
+    flex-wrap: wrap;
+}
+
 .aitems-center {
     align-items: center;
 }
@@ -479,4 +483,12 @@ th {
     flex-direction: column;
     gap: 10px;
     margin-top: 20px;
+}
+
+.property-card {
+    padding: 10px 20px;
+    background-color: #f8f8f8;
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: 500;
 }
